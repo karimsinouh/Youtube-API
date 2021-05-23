@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Youtube API</string>
+    <string name="videos">Videos</string>
+    <string name="playlists">Playlists</string>
+    <string name="favorites">favorites</string>
+    <string name="doanloads">Downloads</string>
 </resources>

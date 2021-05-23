@@ -7,8 +7,16 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.youtubeapi.ui.downloads.Downloads
+import com.example.youtubeapi.ui.favorites.Favorites
+import com.example.youtubeapi.ui.playlists.Playlists
+import com.example.youtubeapi.ui.videos.Videos
 
 @Composable
 @Preview
@@ -32,28 +40,62 @@ fun MainToolbar(){
 }
 
 @Composable
-@Preview
-fun MainRow(){
+fun MainRow(
+    selectedPosition:Int,
+    onTabSelected:(Screen)->Unit
+){
+
+    val screens=Screen.All.list
 
     ScrollableTabRow(
         edgePadding=0.dp,
-        selectedTabIndex =1,
+        selectedTabIndex =selectedPosition,
         contentColor=MaterialTheme.colors.onSurface,
         backgroundColor = MaterialTheme.colors.surface,
         tabs={
+            screens.forEach {
 
-            Tab(selected = false, onClick = { /*TODO*/ }) {
-                Text(text = "Videos", Modifier.padding(8.dp))
+                Tab(
+                    selectedPosition == it.position,
+                    onClick = { onTabSelected(it) }
+                ) {
+                    Text(stringResource(it.title),Modifier.padding(12.dp))
+                }
+
             }
-
-            Tab(selected = true, onClick = { /*TODO*/ }) {
-                Text(text = "Videos", Modifier.padding(8.dp))
-            }
-
-            Tab(selected = false, onClick = { /*TODO*/ }) {
-                Text(text = "Videos", Modifier.padding(8.dp))
-            }
-
         }
     )
+}
+
+@Composable
+fun MainSheet(){
+
+}
+
+@Composable
+fun MainNavHost(
+    controller:NavHostController
+){
+    NavHost(
+        navController = controller,
+        startDestination = Screen.Videos.route
+    ){
+
+        composable(Screen.Videos.route){
+            Videos()
+        }
+
+        composable(Screen.Playlists.route){
+            Playlists()
+        }
+
+        composable(Screen.Favorites.route){
+            Favorites()
+        }
+
+        composable(Screen.Downloads.route){
+            Downloads()
+        }
+
+    }
 }
