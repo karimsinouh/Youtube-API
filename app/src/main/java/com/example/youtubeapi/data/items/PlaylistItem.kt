@@ -1,13 +1,14 @@
 package com.example.youtubeapi.data.items
 
-import com.karimsinouh.youtixv2.data.ContentDetails
-import com.karimsinouh.youtixv2.data.Snippet
+
+import com.example.youtubeapi.data.ContentDetails
+import com.example.youtubeapi.data.Snippet
 import java.io.Serializable
 
 data class PlaylistItem(
     val kind:String,
     val etag:String,
-    val snippet:Snippet,
+    val snippet: Snippet,
     val id:String,
     val contentDetails: ContentDetails,
 ):Serializable

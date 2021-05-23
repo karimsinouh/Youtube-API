@@ -1,8 +1,9 @@
 package com.example.youtubeapi.data.items
 
-import com.karimsinouh.youtixv2.data.ContentDetails
-import com.karimsinouh.youtixv2.data.Snippet
-import com.karimsinouh.youtixv2.data.Statistics
+import com.example.youtubeapi.data.ContentDetails
+import com.example.youtubeapi.data.Snippet
+import com.example.youtubeapi.data.Statistics
+
 
 data class VideoItem (
     val kind:String,
@@ -10,5 +11,5 @@ data class VideoItem (
     val snippet: Snippet,
     val id:String?=null,
     val contentDetails: ContentDetails?=null,
-    val statistics:Statistics?=null
+    val statistics: Statistics?=null
 )

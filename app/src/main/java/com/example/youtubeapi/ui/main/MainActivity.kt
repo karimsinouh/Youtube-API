@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.mutableStateOf
@@ -11,9 +12,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.youtubeapi.ui.theme.YoutubeAPITheme
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    val vm by viewModels<MainViewModel>()
 
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +48,7 @@ class MainActivity : ComponentActivity() {
                         sheetPeekHeight = 0.dp
                     ) {
 
-                        MainNavHost(controller = navController)
+                        MainNavHost(controller = navController,vm)
 
                     }
                 }
