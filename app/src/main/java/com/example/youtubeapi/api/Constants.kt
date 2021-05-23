@@ -1,4 +1,4 @@
-package com.example.api
+package com.example.youtubeapi.api
 
 const val BASE_URL="https://www.googleapis.com/youtube/v3/"
 

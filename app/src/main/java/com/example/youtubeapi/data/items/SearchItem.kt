@@ -1,4 +1,4 @@
-package com.example.data.items
+package com.example.youtubeapi.data.items
 
 import com.karimsinouh.youtixv2.data.ResourceId
 import com.karimsinouh.youtixv2.data.Snippet

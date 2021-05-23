@@ -1,10 +1,10 @@
-package com.example.api
+package com.example.youtubeapi.api
 
-import com.example.data.ResponsePage
-import com.example.data.items.VideoItem
-import com.example.data.Result
-import com.example.data.items.PlaylistItem
-import com.example.data.items.SearchItem
+import com.example.youtubeapi.data.ResponsePage
+import com.example.youtubeapi.data.items.VideoItem
+import com.example.youtubeapi.data.Result
+import com.example.youtubeapi.data.items.PlaylistItem
+import com.example.youtubeapi.data.items.SearchItem
 import javax.inject.Inject
 import javax.inject.Singleton
 

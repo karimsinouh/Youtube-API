@@ -1,4 +1,4 @@
-package com.example.data
+package com.example.youtubeapi.data
 
 data class Result<T>(
         val isSuccessful:Boolean,

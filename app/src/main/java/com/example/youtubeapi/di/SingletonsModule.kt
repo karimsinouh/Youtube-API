@@ -1,7 +1,7 @@
-package com.example.di
+package com.example.youtubeapi.di
 
-import com.example.api.BASE_URL
-import com.example.api.YoutubeEndPoint
+import com.example.youtubeapi.api.BASE_URL
+import com.example.youtubeapi.api.YoutubeEndPoint
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

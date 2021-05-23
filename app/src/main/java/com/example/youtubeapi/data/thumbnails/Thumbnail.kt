@@ -1,4 +1,4 @@
-package com.example.data.thumbnails
+package com.example.youtubeapi.data.thumbnails
 
 data class Thumbnail(
     val url:String,

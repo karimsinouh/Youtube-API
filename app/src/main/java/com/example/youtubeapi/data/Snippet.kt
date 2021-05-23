@@ -1,6 +1,6 @@
-package com.example.data
+package com.example.youtubeapi.data
 
-import com.example.data.thumbnails.Thumbnails
+import com.example.youtubeapi.data.thumbnails.Thumbnails
 import java.io.Serializable
 
 data class Snippet(

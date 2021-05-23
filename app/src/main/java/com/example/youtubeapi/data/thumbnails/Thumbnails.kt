@@ -1,4 +1,4 @@
-package com.example.data.thumbnails
+package com.example.youtubeapi.data.thumbnails
 
 data class Thumbnails(
     val default: Thumbnail,
