@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.youtubeapi.ui.theme.YoutubeAPITheme
 
@@ -39,7 +40,8 @@ class MainActivity : ComponentActivity() {
                                     navController.navigate(it.route)
                                 }
                             }
-                        }
+                        },
+                        sheetPeekHeight = 0.dp
                     ) {
 
                         MainNavHost(controller = navController)
