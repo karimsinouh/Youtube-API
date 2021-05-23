@@ -1,4 +1,4 @@
-package com.karimsinouh.youtixv2.data.items
+package com.example.data.items
 
 import com.karimsinouh.youtixv2.data.ResourceId
 import com.karimsinouh.youtixv2.data.Snippet

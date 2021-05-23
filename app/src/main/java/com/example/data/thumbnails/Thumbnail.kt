@@ -1,4 +1,4 @@
-package com.karimsinouh.youtixv2.data.thumbnails
+package com.example.data.thumbnails
 
 data class Thumbnail(
     val url:String,

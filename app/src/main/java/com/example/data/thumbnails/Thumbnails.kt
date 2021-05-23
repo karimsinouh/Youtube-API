@@ -1,7 +1,7 @@
-package com.karimsinouh.youtixv2.data.thumbnails
+package com.example.data.thumbnails
 
 data class Thumbnails(
-    val default:Thumbnail,
-    val medium:Thumbnail,
-    val high:Thumbnail,
+    val default: Thumbnail,
+    val medium: Thumbnail,
+    val high: Thumbnail,
 )

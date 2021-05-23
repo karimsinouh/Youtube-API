@@ -1,4 +1,4 @@
-package com.karimsinouh.youtixv2.data
+package com.example.data
 
 data class PageInfo(
     val totalResults:Int,
