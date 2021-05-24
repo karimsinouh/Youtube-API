@@ -63,9 +63,13 @@ fun MainRow(
         tabs={
             screens.forEach {
 
+                val isSelected=selectedPosition == it.position
+
                 Tab(
-                    selectedPosition == it.position,
-                    onClick = { onTabSelected(it) }
+                    isSelected,
+                    onClick = {
+                        if (!isSelected) onTabSelected(it)
+                    }
                 ) {
                     Text(stringResource(it.title),Modifier.padding(14.dp))
                 }
