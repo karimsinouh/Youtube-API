@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.youtubeapi.api.Repository
 import com.example.youtubeapi.data.items.VideoItem
+import com.example.youtubeapi.data.screen.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,23 +15,19 @@ class MainViewModel @Inject constructor(
     private val repo: Repository
 ): ViewModel() {
 
-    private var nextPageToken:String?=""
-
-    val message = mutableStateOf<String?>("")
-    val videos= mutableStateOf<List<VideoItem>>(emptyList())
-    val isLoading= mutableStateOf(true)
+    val videosState= ScreenState.getInstance<VideoItem>()
 
     init {
         viewModelScope.launch {
-            repo.getVideos(nextPageToken){
+            repo.getVideos(videosState.nextPageToken){
 
-                isLoading.value=false
+                videosState.setLoading(false)
 
                 if (it.isSuccessful){
-                    videos.value=it.data?.items ?: emptyList()
-                    nextPageToken=it.data?.nextPageToken ?: ""
+                    videosState.addItems(it.data?.items)
+                    videosState.nextPageToken=it.data?.nextPageToken
                 }else
-                    message.value=it.message
+                    videosState.setMessage(it.message)
 
             }
         }
