@@ -25,6 +25,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.youtubeapi.R
 import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.ui.main.MainViewModel
+import androidx.compose.foundation.Image
+import com.google.accompanist.coil.rememberCoilPainter
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -66,14 +68,16 @@ fun VideoItem(
             Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
+
             Image(
-                painter = painterResource(id = R.drawable.material),
-                "",
+                painter = rememberCoilPainter(snippet.thumbnails.medium.url),
+                contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .height(200.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
+
             Text(text = snippet.title,fontSize = 18.sp)
             Text(text = snippet.publishedAt,fontSize = 12.sp)
         }
