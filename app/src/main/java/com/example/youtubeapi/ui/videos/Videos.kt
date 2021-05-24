@@ -18,13 +18,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.youtubeapi.data.Snippet
+import com.example.youtubeapi.data.items.VideoItem
+import com.example.youtubeapi.data.screen.ScreenState
 import com.example.youtubeapi.ui.main.MainViewModel
 import com.google.accompanist.coil.rememberCoilPainter
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Videos(vm:MainViewModel){
-    vm.videosState.apply{
+fun Videos(videosState:ScreenState<VideoItem>){
+    videosState.apply{
 
         if (isLoading.value)
             CenterProgress()
@@ -66,6 +68,7 @@ fun VideoItem(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .height(200.dp)
+                    .fillMaxWidth()
                     .clip(RoundedCornerShape(8.dp))
             )
 

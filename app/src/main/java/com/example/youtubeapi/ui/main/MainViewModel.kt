@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.youtubeapi.api.Repository
+import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.data.screen.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +17,14 @@ class MainViewModel @Inject constructor(
 ): ViewModel() {
 
     val videosState= ScreenState.getInstance<VideoItem>()
+    val playlistsState= ScreenState.getInstance<PlaylistItem>()
 
     init {
+        loadVideos()
+        loadPlaylists()
+    }
+
+    fun loadVideos(){
         viewModelScope.launch {
             repo.getVideos(videosState.nextPageToken){
 
@@ -28,6 +35,20 @@ class MainViewModel @Inject constructor(
                     videosState.nextPageToken=it.data?.nextPageToken
                 }else
                     videosState.setMessage(it.message)
+
+            }
+        }
+    }
+
+    fun loadPlaylists(){
+        viewModelScope.launch {
+            repo.getPlaylists(playlistsState.nextPageToken!!){
+                playlistsState.setLoading(false)
+                if (it.isSuccessful){
+                    playlistsState.nextPageToken=it.data?.nextPageToken
+                    playlistsState.addItems(it.data?.items)
+                }else
+                    playlistsState.setMessage(it.message)
 
             }
         }

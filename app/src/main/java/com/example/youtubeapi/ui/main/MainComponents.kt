@@ -85,11 +85,11 @@ fun MainNavHost(
 
 
         composable(Screen.Videos.route){
-            Videos(vm)
+            Videos(vm.videosState)
         }
 
         composable(Screen.Playlists.route){
-            Playlists()
+            Playlists(vm.playlistsState)
         }
 
         composable(Screen.Favorites.route){
