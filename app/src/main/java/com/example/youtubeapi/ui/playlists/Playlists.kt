@@ -19,7 +19,8 @@ import com.example.youtubeapi.R
 import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.data.screen.ScreenState
-import com.example.youtubeapi.ui.videos.CenterProgress
+import com.example.youtubeapi.utils.CenterProgress
+import com.example.youtubeapi.utils.CoilImage
 import com.google.accompanist.coil.rememberCoilPainter
 
 @Composable
@@ -51,15 +52,15 @@ fun PlaylistItem(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Image(
-                painter = rememberCoilPainter(item.snippet.thumbnails.medium.url),
-                "",
+
+            CoilImage(
+                url = item.snippet.thumbnails.medium.url,
                 modifier = Modifier
                     .width(120.dp)
                     .height(70.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
+                    .clip(RoundedCornerShape(8.dp))
             )
+
 
             Column {
                 Text(text = item.snippet.title,fontSize = 18.sp,maxLines = 3)

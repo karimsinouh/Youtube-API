@@ -21,7 +21,11 @@ import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.data.screen.ScreenState
 import com.example.youtubeapi.ui.main.MainViewModel
+import com.example.youtubeapi.utils.CenterProgress
+import com.example.youtubeapi.utils.CoilImage
+import com.example.youtubeapi.utils.Placeholder
 import com.google.accompanist.coil.rememberCoilPainter
+import com.google.accompanist.imageloading.ImageLoadState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -40,36 +44,21 @@ fun Videos(videosState:ScreenState<VideoItem>){
 }
 
 @Composable
-@Preview
-fun CenterProgress(){
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ){
-        CircularProgressIndicator(strokeWidth = 3.dp)
-    }
-}
-
-@Composable
 fun VideoItem(
     videoId:String,
     snippet:Snippet,
     onClick:()->Unit
 ){
     Box(modifier = Modifier.clickable(onClick = onClick)){
+
         Column(
             Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
 
-            Image(
-                painter = rememberCoilPainter(snippet.thumbnails.medium.url),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .height(200.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
+            CoilImage(
+                url = snippet.thumbnails.high.url,
+                modifier = Modifier.fillMaxWidth().height(190.dp).clip(RoundedCornerShape(8.dp))
             )
 
             Text(text = snippet.title,fontSize = 18.sp)

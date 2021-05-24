@@ -1,16 +1,22 @@
 package com.example.youtubeapi.ui.main
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,6 +24,7 @@ import com.example.youtubeapi.ui.downloads.Downloads
 import com.example.youtubeapi.ui.favorites.Favorites
 import com.example.youtubeapi.ui.playlists.Playlists
 import com.example.youtubeapi.ui.videos.Videos
+import com.example.youtubeapi.R
 
 @Composable
 @Preview
@@ -60,11 +67,11 @@ fun MainRow(
                     selectedPosition == it.position,
                     onClick = { onTabSelected(it) }
                 ) {
-                    Text(stringResource(it.title),Modifier.padding(12.dp))
+                    Text(stringResource(it.title),Modifier.padding(14.dp))
                 }
 
             }
-        }
+        },
     )
 }
 
