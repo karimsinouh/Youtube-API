@@ -1,4 +1,4 @@
-package com.example
+package com.example.youtubeapi
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
