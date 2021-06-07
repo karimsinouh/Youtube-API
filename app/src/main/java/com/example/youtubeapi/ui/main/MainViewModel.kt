@@ -1,6 +1,5 @@
 package com.example.youtubeapi.ui.main
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.youtubeapi.api.Repository

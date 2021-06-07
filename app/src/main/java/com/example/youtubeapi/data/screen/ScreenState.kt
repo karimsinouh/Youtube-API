@@ -16,7 +16,7 @@ data class ScreenState <T>(
                 mutableStateOf(true),
                 mutableStateOf(emptyList()),
                 mutableStateOf(null),
-                ""
+                "",
             )
         }
     }
