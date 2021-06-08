@@ -96,11 +96,10 @@ fun CenterProgress(){
 }
 
 @Composable
-@Preview
-fun StickyHeader(){
+fun StickyHeader(text:String){
     Box(
         modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background)
     ) {
-        Text("Videos",modifier=Modifier.padding(12.dp))
+        Text(text,modifier=Modifier.padding(12.dp))
     }
 }
