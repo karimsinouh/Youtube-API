@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor() :ViewModel() {
-    val screenState = ScreenState.getInstance<Screen.Favorites>()
+    val screenState = ScreenState.getInstance<Screen.WatchLater>()
 
 
 

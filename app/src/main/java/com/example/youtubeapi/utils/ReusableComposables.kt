@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -90,5 +92,15 @@ fun CenterProgress(){
         contentAlignment = Alignment.Center
     ){
         CircularProgressIndicator(strokeWidth = 3.dp)
+    }
+}
+
+@Composable
+@Preview
+fun StickyHeader(){
+    Box(
+        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background)
+    ) {
+        Text("Videos",modifier=Modifier.padding(12.dp))
     }
 }

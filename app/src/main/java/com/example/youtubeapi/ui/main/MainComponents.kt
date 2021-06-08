@@ -1,23 +1,15 @@
 package com.example.youtubeapi.ui.main
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -26,7 +18,6 @@ import com.example.youtubeapi.ui.downloads.Downloads
 import com.example.youtubeapi.ui.favorites.Favorites
 import com.example.youtubeapi.ui.playlists.Playlists
 import com.example.youtubeapi.ui.videos.Videos
-import com.example.youtubeapi.R
 import com.example.youtubeapi.ui.viewVideo.ViewVideo
 import com.example.youtubeapi.ui.viewVideo.ViewVideoViewModel
 
@@ -57,7 +48,7 @@ fun MainRow(
     onTabSelected:(Screen)->Unit
 ){
 
-    val screens=Screen.All.list
+    val screens=Screen.Items.rowItems
 
     ScrollableTabRow(
         edgePadding=0.dp,
@@ -107,7 +98,7 @@ fun MainNavHost(
             Playlists(vm.playlistsState)
         }
 
-        composable(Screen.Favorites.route){
+        composable(Screen.WatchLater.route){
             Favorites()
         }
 
