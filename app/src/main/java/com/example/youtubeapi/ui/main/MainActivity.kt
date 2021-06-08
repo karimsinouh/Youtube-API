@@ -28,6 +28,7 @@ class MainActivity : ComponentActivity() {
                 val navController= rememberNavController()
                 val currentScreen=remember{ mutableStateOf<Screen>(Screen.Videos) }
 
+                //color
                 window.statusBarColor= Color.parseColor("#ffffff")
 
                 Surface(color = MaterialTheme.colors.background) {
