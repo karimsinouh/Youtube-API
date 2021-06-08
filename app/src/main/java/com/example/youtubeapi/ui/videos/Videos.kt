@@ -18,6 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.data.screen.ScreenState
@@ -30,7 +31,10 @@ import com.google.accompanist.imageloading.ImageLoadState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Videos(videosState:ScreenState<VideoItem>){
+fun Videos(
+    videosState:ScreenState<VideoItem>,
+    nav:NavController
+){
     videosState.apply{
 
         if (isLoading.value)
@@ -38,7 +42,9 @@ fun Videos(videosState:ScreenState<VideoItem>){
         else
             LazyColumn {
                 items(items.value){item->
-                    VideoItem(videoId = item.snippet.title, snippet =item.snippet ) {}
+                    VideoItem(videoId = item.snippet.resourceId?.videoId!!, snippet =item.snippet ) {
+                        nav.navigate("viewVideo/${item.snippet.resourceId.videoId}")
+                    }
                 }
             }
     }

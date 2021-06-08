@@ -17,6 +17,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,6 +27,8 @@ import com.example.youtubeapi.ui.favorites.Favorites
 import com.example.youtubeapi.ui.playlists.Playlists
 import com.example.youtubeapi.ui.videos.Videos
 import com.example.youtubeapi.R
+import com.example.youtubeapi.ui.viewVideo.ViewVideo
+import com.example.youtubeapi.ui.viewVideo.ViewVideoViewModel
 
 @Composable
 @Preview
@@ -96,7 +100,7 @@ fun MainNavHost(
 
 
         composable(Screen.Videos.route){
-            Videos(vm.videosState)
+            Videos(vm.videosState,controller)
         }
 
         composable(Screen.Playlists.route){
@@ -109,6 +113,11 @@ fun MainNavHost(
 
         composable(Screen.Downloads.route){
             Downloads()
+        }
+
+        composable("viewVideo/{videoId}"){
+            val viewVideoViewModel= hiltViewModel<ViewVideoViewModel>()
+            ViewVideo(videoId = it.arguments?.getString("videoId")!!, videos =vm.videosState.items,viewVideoViewModel)
         }
 
     }
