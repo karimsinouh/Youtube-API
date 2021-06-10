@@ -1,5 +1,6 @@
 package com.example.youtubeapi.ui.viewVideo
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
@@ -48,6 +49,8 @@ fun ViewVideo(
                     }
                     items(videos.value){item ->
                         VideoItem(videoId = item.id!!, snippet = item.snippet) {
+                            vm.setVideo(null)
+                            Log.d("wtf","id: ${item.id}")
                             vm.loadVideo(item.id)
                         }
                     }

@@ -13,8 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.youtubeapi.ui.theme.PlaceholderColor
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.imageloading.ImageLoadState
@@ -100,6 +102,11 @@ fun StickyHeader(text:String){
     Box(
         modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background)
     ) {
-        Text(text,modifier=Modifier.padding(12.dp))
+        Text(
+            text,
+            modifier=Modifier.padding(12.dp),
+            fontWeight = FontWeight.Black,
+            fontSize = 16.sp
+        )
     }
 }

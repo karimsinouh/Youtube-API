@@ -42,7 +42,8 @@ fun Videos(
         else
             LazyColumn {
                 items(items.value){item->
-                    VideoItem(videoId = item.snippet.resourceId?.videoId!!, snippet =item.snippet ) {
+                    val uid=item.snippet.resourceId?.videoId!!
+                    VideoItem(videoId = uid, snippet =item.snippet ) {
                         nav.navigate("viewVideo/${item.snippet.resourceId.videoId}")
                     }
                 }

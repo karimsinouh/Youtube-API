@@ -1,5 +1,6 @@
 package com.example.youtubeapi.ui.viewVideo
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.youtubeapi.api.Repository
 import com.example.youtubeapi.data.items.VideoItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,12 +22,18 @@ class ViewVideoViewModel @Inject constructor(
     val message= mutableStateOf<String?>(null)
 
     fun loadVideo(id:String)=viewModelScope.launch{
+        delay(1000)
         repo.getVideo(id){
-            if (it.isSuccessful)
-                video.value=it.data
+            if (it.isSuccessful) {
+                setVideo(it.data)
+            }
             else
                 setMessage(it.message)
         }
+    }
+
+    fun setVideo(_video:VideoItem?){
+        video.value=_video
     }
 
     fun setMessage(value:String?){
