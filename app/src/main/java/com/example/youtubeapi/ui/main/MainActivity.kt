@@ -62,7 +62,6 @@ class MainActivity : ComponentActivity() {
                     navController.addOnDestinationChangedListener { _, destination, _ ->
                         destination.route?.let {
                             currentScreen.value = findByRoute(it)
-                            Log.d("wtf",it)
                         }
                     }
                 }

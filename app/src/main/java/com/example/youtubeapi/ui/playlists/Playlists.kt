@@ -1,5 +1,6 @@
 package com.example.youtubeapi.ui.playlists
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.youtubeapi.R
 import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.data.items.PlaylistItem
@@ -24,13 +26,18 @@ import com.example.youtubeapi.utils.CoilImage
 import com.google.accompanist.coil.rememberCoilPainter
 
 @Composable
-fun Playlists(playlistsState:ScreenState<PlaylistItem>){
+fun Playlists(
+    playlistsState:ScreenState<PlaylistItem>,
+    nav:NavController
+){
     if (playlistsState.isLoading.value)
         CenterProgress()
     else
         LazyColumn {
             items(playlistsState.items.value){item->
-                PlaylistItem(item){}
+                PlaylistItem(item){
+                    nav.navigate("viewPlaylist/${item.id}")
+                }
             }
         }
 }

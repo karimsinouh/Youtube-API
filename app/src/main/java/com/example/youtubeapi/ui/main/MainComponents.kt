@@ -1,5 +1,6 @@
 package com.example.youtubeapi.ui.main
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -18,8 +19,11 @@ import com.example.youtubeapi.ui.downloads.Downloads
 import com.example.youtubeapi.ui.favorites.Favorites
 import com.example.youtubeapi.ui.playlists.Playlists
 import com.example.youtubeapi.ui.videos.Videos
+import com.example.youtubeapi.ui.viewPlaylist.ViewPlaylist
+import com.example.youtubeapi.ui.viewPlaylist.ViewPlaylistViewModel
 import com.example.youtubeapi.ui.viewVideo.ViewVideo
 import com.example.youtubeapi.ui.viewVideo.ViewVideoViewModel
+import com.example.youtubeapi.utils.findPlaylistById
 
 @Composable
 @Preview
@@ -95,7 +99,7 @@ fun MainNavHost(
         }
 
         composable(Screen.Playlists.route){
-            Playlists(vm.playlistsState)
+            Playlists(vm.playlistsState,controller)
         }
 
         composable(Screen.WatchLater.route){
@@ -109,6 +113,13 @@ fun MainNavHost(
         composable("viewVideo/{videoId}"){
             val viewVideoViewModel= hiltViewModel<ViewVideoViewModel>()
             ViewVideo(videoId = it.arguments?.getString("videoId")!!, videos =vm.videosState.items,viewVideoViewModel)
+        }
+
+        composable("viewPlaylist/{playlistId}"){
+            val viewPlaylistViewModel= hiltViewModel<ViewPlaylistViewModel>()
+            val playlistId=it.arguments?.getString("playlistId")!!
+            val playlist=vm.playlistsState.items.value.findPlaylistById(playlistId)
+            ViewPlaylist(playlist = playlist!!, vm = viewPlaylistViewModel)
         }
 
     }
