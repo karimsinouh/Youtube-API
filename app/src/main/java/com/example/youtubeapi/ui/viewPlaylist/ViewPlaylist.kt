@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.ui.videos.VideoItem
 import com.example.youtubeapi.ui.viewVideo.Show
@@ -18,7 +19,10 @@ fun ViewPlaylist(
     vm:ViewPlaylistViewModel,
 ){
 
-    vm.loadVideos(playlist.id)
+
+    LaunchedEffect(playlist.id){
+        vm.loadVideos(playlist.id)
+    }
 
     Column {
 
