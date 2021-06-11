@@ -27,10 +27,10 @@ fun ViewPlaylist(
         vm.video.value.let { video->
 
             if (video==null){
-                playlist.snippet.thumbnails.Show(false){}
+                playlist.snippet.thumbnails?.Show(false){}
                 playlist.snippet.Show {}
             }else if (!vm.isLoadingVideo.value){
-                video.snippet.thumbnails.Show {}
+                video.snippet.thumbnails?.Show {}
             }
 
         }

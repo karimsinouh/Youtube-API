@@ -23,6 +23,7 @@ import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.data.screen.ScreenState
 import com.example.youtubeapi.utils.CenterProgress
 import com.example.youtubeapi.utils.CoilImage
+import com.example.youtubeapi.utils.defaultThumbnail
 import com.google.accompanist.coil.rememberCoilPainter
 
 @Composable
@@ -61,7 +62,7 @@ fun PlaylistItem(
         ) {
 
             CoilImage(
-                url = item.snippet.thumbnails.medium.url,
+                url = item.snippet.thumbnails?.medium?.url?: defaultThumbnail,
                 modifier = Modifier
                     .width(120.dp)
                     .height(70.dp)

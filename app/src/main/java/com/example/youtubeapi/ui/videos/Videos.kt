@@ -27,6 +27,7 @@ import com.example.youtubeapi.ui.main.MainViewModel
 import com.example.youtubeapi.utils.CenterProgress
 import com.example.youtubeapi.utils.CoilImage
 import com.example.youtubeapi.utils.Placeholder
+import com.example.youtubeapi.utils.defaultThumbnail
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.imageloading.ImageLoadState
 
@@ -66,7 +67,7 @@ fun VideoItem(
         ) {
 
             CoilImage(
-                url = snippet.thumbnails.high.url,
+                url = snippet.thumbnails?.high?.url?: defaultThumbnail,
                 modifier = Modifier.fillMaxWidth().height(190.dp).clip(RoundedCornerShape(8.dp))
             )
 
@@ -95,7 +96,7 @@ fun VideoItemSmall(
         ) {
 
             CoilImage(
-                url = snippet.thumbnails.medium.url,
+                url = snippet.thumbnails?.medium?.url?: defaultThumbnail,
                 modifier = Modifier
                     .width(120.dp)
                     .height(70.dp)

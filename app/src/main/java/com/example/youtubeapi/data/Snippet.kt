@@ -7,7 +7,7 @@ data class Snippet(
     val publishedAt:String,
     val title:String,
     val description:String,
-    val thumbnails: Thumbnails,
+    val thumbnails: Thumbnails?=null,
     val playlistId:String?=null,
     val position:Int?=null,
     val resourceId: ResourceId?=null

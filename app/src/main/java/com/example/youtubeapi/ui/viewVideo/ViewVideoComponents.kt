@@ -28,6 +28,7 @@ import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.data.thumbnails.Thumbnails
 import com.example.youtubeapi.utils.CoilImage
 import com.example.youtubeapi.R
+import com.example.youtubeapi.utils.defaultThumbnail
 
 
 @Composable
@@ -128,8 +129,11 @@ fun Thumbnails.Show(
         contentAlignment = Alignment.Center
     ){
 
+        val url=
+            high?.url ?: (medium?.url ?: (default?.url ?: defaultThumbnail))
+
         CoilImage(
-            url=medium.url,
+            url=url,
             modifier = Modifier.fillMaxSize()
         )
 

@@ -29,7 +29,7 @@ fun ViewVideo(
 
             Column{
 
-                video.snippet.thumbnails.Show {}
+                video.snippet.thumbnails?.Show {}
 
                 LazyColumn {
 
