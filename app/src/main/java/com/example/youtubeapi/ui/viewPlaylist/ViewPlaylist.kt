@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.ui.videos.VideoItem
+import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.ui.viewVideo.Show
 import com.example.youtubeapi.ui.viewVideo.ViewVideoPlaceholder
 import com.example.youtubeapi.utils.CenterProgress
@@ -54,7 +55,7 @@ fun ViewPlaylist(
 
                     items(videos){item->
                         val id=item.snippet.resourceId?.videoId!!
-                        VideoItem(videoId =id, snippet = item.snippet) {
+                        VideoItemSmall(snippet = item.snippet) {
                             vm.loadVideo(id)
                         }
                     }

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.youtubeapi.data.Snippet
+import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.data.screen.ScreenState
 import com.example.youtubeapi.ui.main.MainViewModel
@@ -71,6 +72,41 @@ fun VideoItem(
 
             Text(text = snippet.title,fontSize = 18.sp)
             Text(text = snippet.publishedAt,fontSize = 12.sp)
+        }
+    }
+}
+
+@Composable
+fun VideoItemSmall(
+    snippet:Snippet,
+    onClick:()->Unit
+){
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+    ) {
+
+        Row(
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+
+            CoilImage(
+                url = snippet.thumbnails.medium.url,
+                modifier = Modifier
+                    .width(120.dp)
+                    .height(70.dp)
+                    .clip(RoundedCornerShape(8.dp))
+            )
+
+
+            Column {
+                Text(text = snippet.title,fontSize = 18.sp,maxLines = 3)
+                Text(text = "${snippet.publishedAt} videos",fontSize = 12.sp,maxLines = 1)
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.ui.videos.VideoItem
+import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.utils.StickyHeader
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -48,10 +49,9 @@ fun ViewVideo(
                         StickyHeader("Videos")
                     }
                     items(videos.value){item ->
-                        VideoItem(videoId = item.id!!, snippet = item.snippet) {
+                        VideoItemSmall(snippet = item.snippet) {
                             vm.setVideo(null)
-                            Log.d("wtf","id: ${item.id}")
-                            vm.loadVideo(item.id)
+                            vm.loadVideo(item.id!!)
                         }
                     }
 
