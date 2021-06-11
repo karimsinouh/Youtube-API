@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.youtubeapi.api.Repository
-import com.example.youtubeapi.api.YoutubeEndPoint
 import com.example.youtubeapi.data.items.VideoItem
+import com.example.youtubeapi.utils.addAll
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,11 +16,12 @@ class ViewPlaylistViewModel @Inject constructor(
     private val youtube:Repository
 ) :ViewModel() {
 
-    var pageToken="0"
+    var pageToken=""
 
-    val videos= mutableStateListOf<VideoItem>()
+    val videos= mutableStateOf<List<VideoItem>?>(null)
     val video= mutableStateOf<VideoItem?>(null)
     val message= mutableStateOf<String?>(null)
+    val isLoadingVideo= mutableStateOf(false)
 
     fun loadVideo(id:String)=viewModelScope.launch {
         youtube.getVideo(id){
@@ -34,8 +35,8 @@ class ViewPlaylistViewModel @Inject constructor(
     fun loadVideos(playlistId:String)=viewModelScope.launch{
         youtube.getPlaylistVideos(playlistId,pageToken){
             if(it.isSuccessful){
-                videos.addAll(it.data?.items!!)
-                pageToken=it.data.nextPageToken?:""
+                videos.addAll(it.data?.items)
+                pageToken=it.data?.nextPageToken?:""
             }else
                 message.value=it.message
 

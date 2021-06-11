@@ -1,5 +1,6 @@
 package com.example.youtubeapi.utils
 
+import androidx.compose.runtime.MutableState
 import com.example.youtubeapi.data.items.PlaylistItem
 
 fun  List<PlaylistItem>.findPlaylistById(id:String):PlaylistItem?{
@@ -14,3 +15,8 @@ fun  List<PlaylistItem>.findPlaylistById(id:String):PlaylistItem?{
     return item
 }
 
+fun <T> MutableState<List<T>?>.addAll(list: List<T>?){
+    val temp=ArrayList(value?: emptyList())
+    temp.addAll(list?: emptyList())
+    value=temp
+}

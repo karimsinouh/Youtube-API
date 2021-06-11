@@ -107,7 +107,7 @@ fun Snippet.Show(
     onClick: () -> Unit
 ){
     Box(
-        Modifier.clickable(onClick = onClick)
+        Modifier.clickable(onClick = onClick).fillMaxWidth()
     ) {
         Column(Modifier.padding(12.dp)) {
             Text(title,fontSize = 20.sp)
@@ -118,6 +118,7 @@ fun Snippet.Show(
 
 @Composable
 fun Thumbnails.Show(
+    includePlayButton:Boolean=true,
     onPlay:()->Unit
 ){
     Box(
@@ -132,13 +133,14 @@ fun Thumbnails.Show(
             modifier = Modifier.fillMaxSize()
         )
 
-        FloatingActionButton(
-            onClick=onPlay,
-            backgroundColor = Color.White,
-            contentColor = Color.Black
-        ) {
-            Icon(Icons.Outlined.PlayArrow, "")
-        }
+        if (includePlayButton)
+            FloatingActionButton(
+                onClick=onPlay,
+                backgroundColor = Color.White,
+                contentColor = Color.Black
+            ) {
+                Icon(Icons.Outlined.PlayArrow, "")
+            }
 
     }
 }
