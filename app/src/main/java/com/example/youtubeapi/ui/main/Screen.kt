@@ -21,7 +21,8 @@ sealed class Screen(
             Playlists,
             WatchLater,
             Downloads,
-            ViewVideo
+            ViewVideo,
+            ViewPlaylist
         )
     }
 
@@ -30,6 +31,7 @@ sealed class Screen(
     object WatchLater:Screen("watchlater", R.string.favorites, R.drawable.ic_favorite,2)
     object Downloads:Screen("downloads", R.string.doanloads, R.drawable.ic_download,3)
     object ViewVideo:Screen("viewVideo", R.string.videos,position = 4)
+    object ViewPlaylist:Screen("viewPlaylist", R.string.playlists,position = 5)
 
 }
 fun findByRoute(route:String):Screen{

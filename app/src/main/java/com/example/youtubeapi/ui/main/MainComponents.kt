@@ -110,12 +110,12 @@ fun MainNavHost(
             Downloads()
         }
 
-        composable("viewVideo/{videoId}"){
+        composable("${Screen.ViewVideo.route}/{videoId}"){
             val viewVideoViewModel= hiltViewModel<ViewVideoViewModel>()
             ViewVideo(videoId = it.arguments?.getString("videoId")!!, videos =vm.videosState.items,viewVideoViewModel)
         }
 
-        composable("viewPlaylist/{playlistId}"){
+        composable("${Screen.ViewPlaylist.route}/{playlistId}"){
             val viewPlaylistViewModel= hiltViewModel<ViewPlaylistViewModel>()
             val playlistId=it.arguments?.getString("playlistId")!!
             val playlist=vm.playlistsState.items.value.findPlaylistById(playlistId)
