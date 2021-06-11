@@ -1,6 +1,5 @@
 package com.example.youtubeapi.ui.main
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -95,7 +94,7 @@ fun MainNavHost(
 
 
         composable(Screen.Videos.route){
-            Videos(vm.videosState,controller)
+            Videos(vm,controller)
         }
 
         composable(Screen.Playlists.route){

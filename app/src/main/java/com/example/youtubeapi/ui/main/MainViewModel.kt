@@ -7,6 +7,7 @@ import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.data.screen.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,6 +26,8 @@ class MainViewModel @Inject constructor(
 
     fun loadVideos(){
         viewModelScope.launch {
+            videosState.setLoading(true)
+            delay(1000)
             repo.getVideos(videosState.nextPageToken){
 
                 videosState.setLoading(false)

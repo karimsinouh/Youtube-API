@@ -88,9 +88,9 @@ fun CoilImage(
 }
 
 @Composable
-fun CenterProgress(){
+fun CenterProgress(fullHeight:Boolean=true){
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = if (fullHeight) Modifier.fillMaxSize() else Modifier.padding(8.dp,0.dp,).fillMaxWidth(),
         contentAlignment = Alignment.Center
     ){
         CircularProgressIndicator(strokeWidth = 3.dp)
