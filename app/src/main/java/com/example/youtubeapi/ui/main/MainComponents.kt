@@ -98,7 +98,7 @@ fun MainNavHost(
         }
 
         composable(Screen.Playlists.route){
-            Playlists(vm.playlistsState,controller)
+            Playlists(vm,controller)
         }
 
         composable(Screen.WatchLater.route){

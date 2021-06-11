@@ -40,7 +40,7 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun getPlaylists(pageToken:String, listener:(Result<ResponsePage<PlaylistItem>>)->Unit){
+    suspend fun getPlaylists(pageToken:String?, listener:(Result<ResponsePage<PlaylistItem>>)->Unit){
         api.getPlaylists(pageToken).apply {
             listener(Result(isSuccessful,body(),message()))
         }

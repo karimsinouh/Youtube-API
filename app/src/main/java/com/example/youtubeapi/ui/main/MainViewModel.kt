@@ -42,9 +42,14 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun loadPlaylists(){
-        viewModelScope.launch {
-            repo.getPlaylists(playlistsState.nextPageToken!!){
+    fun loadPlaylists()=viewModelScope.launch {
+
+        if(playlistsState.canLoadMore){
+
+            playlistsState.setLoading(true)
+            delay(1000)
+
+            repo.getPlaylists(playlistsState.nextPageToken){
                 playlistsState.setLoading(false)
                 if (it.isSuccessful){
                     playlistsState.nextPageToken=it.data?.nextPageToken
@@ -53,6 +58,7 @@ class MainViewModel @Inject constructor(
                     playlistsState.setMessage(it.message)
 
             }
+
         }
     }
 
