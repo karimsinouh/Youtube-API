@@ -1,5 +1,6 @@
 package com.example.youtubeapi.ui.main
 
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -33,7 +34,12 @@ class MainActivity : ComponentActivity() {
                 val currentScreen=remember{ mutableStateOf<Screen>(Screen.Videos) }
 
                 //color
-                window.statusBarColor= Color.parseColor("#ffffff")
+                window.statusBarColor=if (isSystemDarkMode())
+                    Color.parseColor("#121212")
+                else
+                    Color.parseColor("#ffffff")
+
+
 
                 Surface(color = MaterialTheme.colors.background) {
 
@@ -68,6 +74,11 @@ class MainActivity : ComponentActivity() {
 
             }
         }
+    }
+
+    private fun isSystemDarkMode():Boolean{
+        val mode=resources.configuration.uiMode.and(Configuration.UI_MODE_NIGHT_MASK)
+        return mode==Configuration.UI_MODE_NIGHT_YES
     }
 
 }
