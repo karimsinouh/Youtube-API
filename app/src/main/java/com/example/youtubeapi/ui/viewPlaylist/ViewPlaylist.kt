@@ -1,18 +1,14 @@
 package com.example.youtubeapi.ui.viewPlaylist
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.example.youtubeapi.data.items.PlaylistItem
-import com.example.youtubeapi.ui.videos.VideoItem
+import com.example.youtubeapi.utils.CenterProgress
 import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.ui.viewVideo.Show
-import com.example.youtubeapi.ui.viewVideo.ViewVideoPlaceholder
-import com.example.youtubeapi.utils.CenterProgress
 
 @Composable
 fun ViewPlaylist(
@@ -33,15 +29,8 @@ fun ViewPlaylist(
             if (video==null){
                 playlist.snippet.thumbnails.Show(false){}
                 playlist.snippet.Show {}
-            }else{
-
-                if(vm.isLoadingVideo.value)
-                    ViewVideoPlaceholder()
-                else{
-                    video.snippet.thumbnails.Show {}
-                    video.snippet.Show {}
-                    video.statistics?.Show(inWatchLater = false, onShare = {  }) {}
-                }
+            }else if (!vm.isLoadingVideo.value){
+                video.snippet.thumbnails.Show {}
             }
 
         }
@@ -52,6 +41,20 @@ fun ViewPlaylist(
                 CenterProgress()
             }else{
                 LazyColumn {
+
+                    if(!vm.isLoadingVideo.value)
+                        item {
+                            vm.video.value?.let {
+                                Column {
+                                    it.snippet.Show {}
+                                    it.statistics?.Show(
+                                        inWatchLater = true,
+                                        onShare = {  },
+                                        onWatchLater = {  }
+                                    )
+                                }
+                            }
+                        }
 
                     items(videos){item->
                         val id=item.snippet.resourceId?.videoId!!
