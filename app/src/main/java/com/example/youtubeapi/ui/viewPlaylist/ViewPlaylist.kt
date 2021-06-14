@@ -19,7 +19,8 @@ fun ViewPlaylist(
 
 
     LaunchedEffect(playlist.id){
-        vm.loadVideos(playlist.id)
+        if(vm.videos.value==null)
+            vm.loadVideos(playlist.id)
     }
 
     Column {
@@ -46,7 +47,7 @@ fun ViewPlaylist(
                 if(!vm.isLoadingVideo.value)
                     item {
                         vm.video.value?.let {
-                            Column {
+                            Column {lo
                                 it.snippet.Show {}
                                 it.statistics?.Show(
                                     inWatchLater = true,
