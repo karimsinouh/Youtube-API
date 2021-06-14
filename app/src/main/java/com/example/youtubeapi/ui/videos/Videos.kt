@@ -45,10 +45,12 @@ fun Videos(
 
                     if ((index+1)==items.value.size){
                         //end of list reached
+                        val canLoadMore=nextPageToken!="" || items.value.isEmpty() && nextPageToken==""
+
                         if (!isLoadingMore && canLoadMore)
-                        LaunchedEffect(nextPageToken){
-                            vm.loadVideos()
-                        }
+                            LaunchedEffect(nextPageToken){
+                                vm.loadVideos()
+                            }
                     }
 
                 }
