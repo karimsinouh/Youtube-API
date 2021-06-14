@@ -9,7 +9,7 @@ import java.lang.NullPointerException
 sealed class Screen(
     val route:String,
     @StringRes val title:Int,
-    @DrawableRes icon:Int?=null,
+    @DrawableRes val icon:Int?=null,
     val position:Int?=null
     ){
 

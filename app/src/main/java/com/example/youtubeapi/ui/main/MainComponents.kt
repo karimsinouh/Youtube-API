@@ -1,12 +1,13 @@
 package com.example.youtubeapi.ui.main
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -14,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.youtubeapi.R
 import com.example.youtubeapi.ui.downloads.Downloads
 import com.example.youtubeapi.ui.favorites.Favorites
 import com.example.youtubeapi.ui.playlists.Playlists
@@ -25,14 +27,16 @@ import com.example.youtubeapi.ui.viewVideo.ViewVideoViewModel
 import com.example.youtubeapi.utils.findPlaylistById
 
 @Composable
-@Preview
-fun MainToolbar(){
+fun MainToolbar(
+    onNavigationClick:()->Unit,
+    onSearchClick:()->Unit
+){
     TopAppBar(
         title = { Text("Youtube API") },
         actions = {
 
-            IconButton(onClick = {}) {
-                Icon(Icons.Outlined.Search, "")
+            IconButton(onSearchClick) {
+                Icon(Icons.Outlined.Search, null)
             }
 
             IconButton(onClick = {}) {
@@ -41,7 +45,12 @@ fun MainToolbar(){
         },
         contentColor = MaterialTheme.colors.onSurface,
         backgroundColor = MaterialTheme.colors.surface,
-        elevation = 0.dp
+        elevation = 0.dp,
+        navigationIcon = {
+            IconButton(onClick = onNavigationClick) {
+                Icon(Icons.Outlined.Menu,null)
+            }
+        }
     )
 }
 
@@ -121,5 +130,35 @@ fun MainNavHost(
             ViewPlaylist(playlist = playlist!!, vm = viewPlaylistViewModel)
         }
 
+    }
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+@Preview
+fun MainDrawer(){
+    Column(Modifier.padding(12.dp)){
+
+        //top settings icon
+        Box(
+            Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            IconButton(onClick = {  }) {
+                Icon(painter = painterResource(R.drawable.ic_dark_mode), null)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        //navigation
+        Screen.Items.rowItems.forEach {
+            ListItem(
+                icon={Icon( painter = painterResource(it.icon!!), null )},
+                text={ Text(stringResource(it.title)) },
+                trailing = { Icon(Icons.Outlined.KeyboardArrowRight, null )}
+            )
+        }
     }
 }

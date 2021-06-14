@@ -38,14 +38,12 @@ val Typography = Typography(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-        fontStyle = FontStyle.Italic
     ),
 
     subtitle2 = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Normal,
-        fontSize = 10.sp,
-        fontStyle = FontStyle.Italic
+        fontSize = 10.sp
     ),
 
 
