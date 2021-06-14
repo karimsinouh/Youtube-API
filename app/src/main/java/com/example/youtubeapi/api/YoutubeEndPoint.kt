@@ -10,13 +10,13 @@ import retrofit2.http.Query
 
 interface YoutubeEndPoint {
 
-    @GET("playlistItems?part=snippet&playlistId=$PLAYLIST_ID&maxResults=20&key=$API_KEY")
+    @GET("playlistItems?part=snippet&playlistId=$PLAYLIST_ID&maxResults=10&key=$API_KEY")
     suspend fun getVideos( @Query("pageToken") pageToken:String?="" ): Response<ResponsePage<VideoItem>>
 
-    @GET("playlists?part=snippet,contentDetails&channelId=$CHANNEL_ID&maxResults=20&key=$API_KEY")
+    @GET("playlists?part=snippet,contentDetails&channelId=$CHANNEL_ID&maxResults=10&key=$API_KEY")
     suspend fun getPlaylists( @Query("pageToken") pageToken:String?="" ):Response<ResponsePage<PlaylistItem>>
 
-    @GET("search?part=snippet&channelId=$CHANNEL_ID&key=$API_KEY&maxResults=8")
+    @GET("search?part=snippet&channelId=$CHANNEL_ID&key=$API_KEY&maxResults=10")
     suspend fun search( @Query("q") q:String,@Query("pageToken") pageToken:String?="" ):Response<ResponsePage<SearchItem>>
 
     @GET("videos?part=snippet&key=$API_KEY")
@@ -25,7 +25,7 @@ interface YoutubeEndPoint {
     @GET("videos?part=snippet,contentDetails,statistics&key=$API_KEY")
     suspend fun getVideo( @Query("id") id:String ):Response<ResponsePage<VideoItem>>
 
-    @GET("playlistItems?part=snippet,contentDetails&key=$API_KEY&maxResults=15")
+    @GET("playlistItems?part=snippet,contentDetails&key=$API_KEY&maxResults=10")
     suspend fun getPlaylistVideos( @Query("playlistId") id:String, @Query("pageToken") token:String?="" ):Response<ResponsePage<VideoItem>>
 
 }
