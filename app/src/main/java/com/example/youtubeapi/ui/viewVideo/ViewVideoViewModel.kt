@@ -1,8 +1,5 @@
 package com.example.youtubeapi.ui.viewVideo
 
-import android.util.Log
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,9 +21,8 @@ class ViewVideoViewModel @Inject constructor(
     fun loadVideo(id:String)=viewModelScope.launch{
         delay(1000)
         repo.getVideo(id){
-            if (it.isSuccessful) {
+            if (it.isSuccessful)
                 setVideo(it.data)
-            }
             else
                 setMessage(it.message)
         }

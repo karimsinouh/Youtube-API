@@ -55,10 +55,7 @@ fun CoilImage(
     url:String,
     modifier: Modifier
 ){
-    val painter= rememberCoilPainter(
-        url,
-        fadeIn = true,
-    )
+    val painter= rememberCoilPainter(url)
 
     Box(modifier) {
         when(painter.loadState){

@@ -1,14 +1,13 @@
 package com.example.youtubeapi.ui.viewVideo
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import com.example.youtubeapi.data.items.VideoItem
-import com.example.youtubeapi.ui.videos.VideoItem
 import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.utils.StickyHeader
 
@@ -19,14 +18,16 @@ fun ViewVideo(
     videos:MutableState<List<VideoItem>>,
     vm:ViewVideoViewModel
 ){
-    vm.loadVideo(videoId)
+
+    LaunchedEffect(videoId){
+        vm.loadVideo(videoId)
+    }
 
     vm.video.value.let { video ->
 
         if (video == null)
             ViewVideoPlaceholder()
-        else {
-
+        else
             Column{
 
                 video.snippet.thumbnails?.Show {}
@@ -49,7 +50,7 @@ fun ViewVideo(
                         StickyHeader("Videos")
                     }
                     items(videos.value){item ->
-                        VideoItemSmall(snippet = item.snippet) {
+                        VideoItemSmall(item.snippet) {
                             vm.setVideo(null)
                             vm.loadVideo(item.id!!)
                         }
@@ -57,7 +58,6 @@ fun ViewVideo(
 
                 }
             }
-        }
 
     }
 

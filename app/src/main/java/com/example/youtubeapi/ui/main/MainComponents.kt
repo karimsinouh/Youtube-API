@@ -1,5 +1,6 @@
 package com.example.youtubeapi.ui.main
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -9,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -136,8 +136,12 @@ fun MainNavHost(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-@Preview
-fun MainDrawer(){
+fun MainDrawer(
+    darkMode:Boolean,
+    selectedScreenRoute: String,
+    onDarkModeChanges:()->Unit,
+    onNavigate:(Screen)->Unit,
+){
     Column(Modifier.padding(12.dp)){
 
         //top settings icon
@@ -145,9 +149,16 @@ fun MainDrawer(){
             Modifier.fillMaxWidth(),
             contentAlignment = Alignment.CenterEnd
         ) {
-            IconButton(onClick = {  }) {
-                Icon(painter = painterResource(R.drawable.ic_dark_mode), null)
+            IconButton(onClick = {
+                onDarkModeChanges()
+            }) {
+                if (darkMode){
+                    Icon(painter = painterResource(R.drawable.ic_light_mode), null)
+                }else{
+                    Icon(painter = painterResource(R.drawable.ic_dark_mode), null)
+                }
             }
+
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -157,7 +168,8 @@ fun MainDrawer(){
             ListItem(
                 icon={Icon( painter = painterResource(it.icon!!), null )},
                 text={ Text(stringResource(it.title)) },
-                trailing = { Icon(Icons.Outlined.KeyboardArrowRight, null )}
+                trailing = { Icon(Icons.Outlined.KeyboardArrowRight, null )},
+                modifier = Modifier.clickable { onNavigate(it) },
             )
         }
     }
