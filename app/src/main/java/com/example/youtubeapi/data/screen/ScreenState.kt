@@ -37,6 +37,6 @@ data class ScreenState <T>(
 
     val isLoadingMore=isLoading.value && nextPageToken!=""
 
-    val canLoadMore= nextPageToken!="" && items.value.isNotEmpty() || nextPageToken=="" && items.value.isEmpty()
+    val canLoadMore= nextPageToken!="" || items.value.isEmpty() && nextPageToken==""
 
 }

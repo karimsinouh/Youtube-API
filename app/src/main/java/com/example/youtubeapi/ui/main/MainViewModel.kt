@@ -1,5 +1,6 @@
 package com.example.youtubeapi.ui.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.youtubeapi.api.Repository
@@ -20,12 +21,13 @@ class MainViewModel @Inject constructor(
     val playlistsState= ScreenState.getInstance<PlaylistItem>()
 
     init {
-        loadVideos()
-        loadPlaylists()
+        viewModelScope.launch {
+            loadVideos()
+            loadPlaylists()
+        }
     }
 
-    fun loadVideos(){
-        viewModelScope.launch {
+    suspend fun loadVideos(){
             videosState.setLoading(true)
             delay(1000)
             repo.getVideos(videosState.nextPageToken){
@@ -34,30 +36,25 @@ class MainViewModel @Inject constructor(
 
                 if (it.isSuccessful){
                     videosState.addItems(it.data?.items)
-                    videosState.nextPageToken=it.data?.nextPageToken
+                    videosState.nextPageToken=it.data?.nextPageToken ?: ""
                 }else
                     videosState.setMessage(it.message)
 
             }
-        }
     }
 
-    fun loadPlaylists()=viewModelScope.launch {
+    suspend fun loadPlaylists() {
 
-        if(playlistsState.canLoadMore){
+        playlistsState.setLoading(true)
+        delay(1000)
 
-            playlistsState.setLoading(true)
-            delay(1000)
-
-            repo.getPlaylists(playlistsState.nextPageToken){
-                playlistsState.setLoading(false)
-                if (it.isSuccessful){
-                    playlistsState.nextPageToken=it.data?.nextPageToken
-                    playlistsState.addItems(it.data?.items)
-                }else
-                    playlistsState.setMessage(it.message)
-
-            }
+        repo.getPlaylists(playlistsState.nextPageToken){
+            playlistsState.setLoading(false)
+            if (it.isSuccessful){
+                playlistsState.nextPageToken=it.data?.nextPageToken ?: ""
+                playlistsState.addItems(it.data?.items)
+            }else
+                playlistsState.setMessage(it.message)
 
         }
     }

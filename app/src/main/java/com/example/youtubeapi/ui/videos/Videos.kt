@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -31,7 +32,7 @@ fun Videos(
 ){
     vm.videosState.apply{
 
-        if (isLoading.value && nextPageToken=="")
+        if (isLoading.value && nextPageToken=="" && items.value.isEmpty() )
             CenterProgress()
         else
             LazyColumn {
@@ -44,7 +45,8 @@ fun Videos(
 
                     if ((index+1)==items.value.size){
                         //end of list reached
-                        if (!isLoadingMore && canLoadMore){
+                        if (!isLoadingMore && canLoadMore)
+                        LaunchedEffect(nextPageToken){
                             vm.loadVideos()
                         }
                     }
