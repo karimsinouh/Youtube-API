@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.utils.StickyHeader
@@ -16,7 +17,7 @@ import com.example.youtubeapi.utils.StickyHeader
 fun ViewVideo(
     videoId:String,
     videos:MutableState<List<VideoItem>>,
-    vm:ViewVideoViewModel
+    vm:ViewVideoViewModel=hiltViewModel()
 ){
 
     LaunchedEffect(videoId){

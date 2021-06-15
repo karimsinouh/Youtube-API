@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.utils.CenterProgress
 import com.example.youtubeapi.ui.videos.VideoItemSmall
@@ -17,7 +18,7 @@ import com.example.youtubeapi.utils.StickyHeader
 @Composable
 fun ViewPlaylist(
     playlist:PlaylistItem,
-    vm:ViewPlaylistViewModel,
+    vm:ViewPlaylistViewModel = hiltViewModel(),
 ){
 
 
