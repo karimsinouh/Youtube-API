@@ -4,9 +4,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -87,7 +88,9 @@ fun CoilImage(
 @Composable
 fun CenterProgress(fullHeight:Boolean=true){
     Box(
-        modifier = if (fullHeight) Modifier.fillMaxSize() else Modifier.padding(8.dp,0.dp,).fillMaxWidth(),
+        modifier = if (fullHeight) Modifier.fillMaxSize() else Modifier
+            .padding(8.dp, 0.dp,)
+            .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ){
         CircularProgressIndicator(strokeWidth = 3.dp)
@@ -106,4 +109,30 @@ fun StickyHeader(text:String){
             fontSize = 16.sp
         )
     }
+}
+
+@Composable
+fun ExpandableStickyHeader(
+    text:String,
+    expanded:Boolean,
+    onExpand:()->Unit
+){
+
+    Row(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text,
+            modifier= Modifier
+                .padding(12.dp)
+                .weight(0.9f),
+            fontWeight = FontWeight.Black,
+            fontSize = 16.sp
+        )
+        IconButton(onClick = onExpand) {
+            Icon(if (expanded) Icons.Default.KeyboardArrowUp else  Icons.Default.KeyboardArrowDown,null)
+        }
+    }
+
+
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
@@ -23,6 +24,7 @@ class MainActivity : ComponentActivity() {
 
     val vm by viewModels<MainViewModel>()
 
+    @ExperimentalAnimationApi
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +91,8 @@ class MainActivity : ComponentActivity() {
                                     scope.launch {
                                         scaffoldState.drawerState.close()
                                     }
-                                }
+                                },
+                                playlists = vm.playlistsState.items.value
                             )
                                         },
                         drawerBackgroundColor = MaterialTheme.colors.background,

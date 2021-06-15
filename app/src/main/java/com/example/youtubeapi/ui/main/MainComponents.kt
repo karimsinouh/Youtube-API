@@ -1,12 +1,19 @@
 package com.example.youtubeapi.ui.main
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,6 +26,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.youtubeapi.R
+import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.ui.downloads.Downloads
 import com.example.youtubeapi.ui.favorites.Favorites
 import com.example.youtubeapi.ui.playlists.Playlists
@@ -28,6 +36,8 @@ import com.example.youtubeapi.ui.viewPlaylist.ViewPlaylist
 import com.example.youtubeapi.ui.viewPlaylist.ViewPlaylistViewModel
 import com.example.youtubeapi.ui.viewVideo.ViewVideo
 import com.example.youtubeapi.ui.viewVideo.ViewVideoViewModel
+import com.example.youtubeapi.utils.ExpandableStickyHeader
+import com.example.youtubeapi.utils.StickyHeader
 import com.example.youtubeapi.utils.findPlaylistById
 
 @Composable
@@ -56,14 +66,6 @@ fun MainToolbar(
             }
         }
     )
-}
-
-@Composable
-@Preview
-fun Prev(){
-    MainRow(selectedPosition = 1) {
-
-    }
 }
 
 @Composable
@@ -148,14 +150,22 @@ fun MainNavHost(
 }
 
 
+
+@ExperimentalAnimationApi
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainDrawer(
     darkMode:Boolean,
     selectedScreenRoute: String,
+    playlists:List<PlaylistItem>,
     onDarkModeChanges:()->Unit,
     onNavigate:(Screen)->Unit,
 ){
+
+    val showPlaylists= remember {
+        mutableStateOf(true)
+    }
+
     Column(Modifier.padding(12.dp)){
 
         //top settings icon
@@ -194,6 +204,27 @@ fun MainDrawer(
                     .background(backgroundColor)
                     .clip(Shapes.small),
             )
+        }
+
+        if(playlists.isNotEmpty()){
+
+            ExpandableStickyHeader("Playlists",showPlaylists.value){
+                showPlaylists.value= !showPlaylists.value
+            }
+
+            AnimatedVisibility(showPlaylists.value) {
+                Column(Modifier.verticalScroll(rememberScrollState())){
+
+                    playlists.forEach {
+                        ListItem(
+                            text = { Text(text = it.snippet.title) },
+                            overlineText = { Text("${it.contentDetails.itemCount} videos") }
+                        )
+                    }
+
+                }
+            }
+
         }
     }
 }
