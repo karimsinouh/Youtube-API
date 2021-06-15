@@ -1,17 +1,17 @@
 package com.example.youtubeapi.ui.viewVideo
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.ThumbUp
-import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.PlayArrow
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,17 +19,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.VectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.youtubeapi.data.Statistics
-import com.example.youtubeapi.utils.Placeholder
+import com.example.youtubeapi.R
 import com.example.youtubeapi.data.Snippet
+import com.example.youtubeapi.data.Statistics
 import com.example.youtubeapi.data.thumbnails.Thumbnails
 import com.example.youtubeapi.utils.CoilImage
-import com.example.youtubeapi.R
+import com.example.youtubeapi.utils.Placeholder
 import com.example.youtubeapi.utils.defaultThumbnail
 
 
@@ -56,7 +55,7 @@ fun Statistics.Show(
     onWatchLater:(Boolean)->Unit
 ){
     Row(
-        modifier= Modifier.fillMaxWidth().background(MaterialTheme.colors.surface),
+        modifier= Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ){
 
@@ -110,7 +109,7 @@ fun Snippet.Show(
     onClick: () -> Unit
 ){
     Box(
-        Modifier.clickable(onClick = onClick).fillMaxWidth().background(MaterialTheme.colors.surface)
+        Modifier.clickable(onClick = onClick).fillMaxWidth()
     ) {
         Column(Modifier.padding(12.dp)) {
             Text(title,fontSize = 20.sp)

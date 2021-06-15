@@ -98,7 +98,6 @@ fun CenterProgress(fullHeight:Boolean=true){
 fun StickyHeader(text:String){
     Box(
         modifier = Modifier.fillMaxWidth()
-            .background(MaterialTheme.colors.surface)
     ) {
         Text(
             text,
