@@ -64,7 +64,10 @@ class MainActivity : ComponentActivity() {
                                         onSearchClick = {})
                                     MainRow(currentScreen.value.position!!) {
                                         currentScreen.value=it
-                                        navController.navigate(it.route)
+                                        navController.navigate(it.route){
+                                            popUpTo(Screen.Videos.route)
+                                            launchSingleTop=true
+                                        }
                                     }
                                 }
                         },
@@ -79,7 +82,10 @@ class MainActivity : ComponentActivity() {
                                                     },
                                 onNavigate = {
                                     currentScreen.value=it
-                                    navController.navigate(it.route)
+                                    navController.navigate(it.route){
+                                        popUpTo(Screen.Videos.route)
+                                        launchSingleTop=true
+                                    }
                                     scope.launch {
                                         scaffoldState.drawerState.close()
                                     }
