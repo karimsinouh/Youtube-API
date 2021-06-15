@@ -1,21 +1,20 @@
 package com.example.youtubeapi.ui.main
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.youtubeapi.ui.theme.DrawerShape
 import com.example.youtubeapi.ui.theme.YoutubeAPITheme
-import com.example.youtubeapi.utils.isDarkMode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -33,20 +32,18 @@ class MainActivity : ComponentActivity() {
             val currentScreen=remember{ mutableStateOf<Screen>(Screen.Videos) }
             val scaffoldState= rememberBottomSheetScaffoldState()
             val scope= rememberCoroutineScope()
-            val darkMode= mutableStateOf(false)
+            val darkTheme=remember { mutableStateOf(false) }
 
 
 
-            darkMode.value=isDarkMode()
+            darkTheme.value= isSystemInDarkTheme()
 
-            window.statusBarColor=if (darkMode.value)
-                Color.parseColor("#121212")
-            else
-                Color.parseColor("#ffffff")
 
-            YoutubeAPITheme(darkMode.value) {
+            YoutubeAPITheme(darkTheme.value) {
 
                 Surface(color = MaterialTheme.colors.background) {
+
+                window.statusBarColor=MaterialTheme.colors.surface.toArgb()
 
                     BottomSheetScaffold(
                         sheetContent = {MainSheet()},
@@ -75,11 +72,10 @@ class MainActivity : ComponentActivity() {
                         drawerShape = DrawerShape,
                         drawerContent = {
                             MainDrawer(
-                                darkMode = darkMode.value,
+                                darkMode = darkTheme.value,
                                 selectedScreenRoute = currentScreen.value.route,
                                 onDarkModeChanges = {
-                                    darkMode.value=true
-                                    Log.d("wtf","clicked")
+                                    darkTheme.value=false
                                                     },
                                 onNavigate = {
                                     currentScreen.value=it

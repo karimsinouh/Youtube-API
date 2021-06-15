@@ -97,7 +97,8 @@ fun CenterProgress(fullHeight:Boolean=true){
 @Composable
 fun StickyHeader(text:String){
     Box(
-        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background)
+        modifier = Modifier.fillMaxWidth()
+            .background(MaterialTheme.colors.surface)
     ) {
         Text(
             text,

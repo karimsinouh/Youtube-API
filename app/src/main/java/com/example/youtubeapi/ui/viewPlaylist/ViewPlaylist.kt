@@ -1,5 +1,6 @@
 package com.example.youtubeapi.ui.viewPlaylist
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,7 +11,9 @@ import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.utils.CenterProgress
 import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.ui.viewVideo.Show
+import com.example.youtubeapi.utils.StickyHeader
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ViewPlaylist(
     playlist:PlaylistItem,
@@ -47,7 +50,7 @@ fun ViewPlaylist(
                 if(!vm.isLoadingVideo.value)
                     item {
                         vm.video.value?.let {
-                            Column {lo
+                            Column {
                                 it.snippet.Show {}
                                 it.statistics?.Show(
                                     inWatchLater = true,
@@ -58,6 +61,9 @@ fun ViewPlaylist(
                         }
                     }
 
+                stickyHeader {
+                    StickyHeader("Videos")
+                }
                 itemsIndexed(videos){ index,item->
                     val id=item.snippet.resourceId?.videoId!!
                     VideoItemSmall(snippet = item.snippet) {

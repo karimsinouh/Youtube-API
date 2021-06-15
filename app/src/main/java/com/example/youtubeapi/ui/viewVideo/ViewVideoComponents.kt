@@ -1,10 +1,12 @@
 package com.example.youtubeapi.ui.viewVideo
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
@@ -54,7 +56,7 @@ fun Statistics.Show(
     onWatchLater:(Boolean)->Unit
 ){
     Row(
-        modifier= Modifier.fillMaxWidth(),
+        modifier= Modifier.fillMaxWidth().background(MaterialTheme.colors.surface),
         horizontalArrangement = Arrangement.SpaceEvenly
     ){
 
@@ -108,7 +110,7 @@ fun Snippet.Show(
     onClick: () -> Unit
 ){
     Box(
-        Modifier.clickable(onClick = onClick).fillMaxWidth()
+        Modifier.clickable(onClick = onClick).fillMaxWidth().background(MaterialTheme.colors.surface)
     ) {
         Column(Modifier.padding(12.dp)) {
             Text(title,fontSize = 20.sp)

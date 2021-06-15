@@ -7,4 +7,7 @@ val Green500 = Color(0xFF689F38)
 val Green700 = Color(0xFF388E3C)
 val Teal200 = Color(0xFF7B1FA2)
 
+val DarkBackground=Color(0xFF171F11)
+val DarkSurface=Color(0xFF262E21)
+
 val PlaceholderColor=Color.Gray.copy(alpha = 0.35f)
