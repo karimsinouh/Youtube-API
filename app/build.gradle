@@ -73,4 +73,10 @@ dependencies {
     //image loading library
     implementation "com.google.accompanist:accompanist-coil:0.10.0"
 
+    //room database
+    def room_version = "2.3.0"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
 }
