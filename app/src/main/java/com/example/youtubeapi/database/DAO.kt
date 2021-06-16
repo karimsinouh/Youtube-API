@@ -12,16 +12,12 @@ interface DAO {
     @Insert(entity = WatchLaterVideo::class)
     suspend fun addToWatchLater(item:WatchLaterVideo)
 
-    @Delete(entity = WatchLaterVideo::class)
-    suspend fun removeFromWatchLater(item:WatchLaterVideo)
+    @Query("DELETE FROM watch_later WHERE videoId=:videoId")
+    suspend fun removeFromWatchLater(videoId:String)
 
     @Query(" SELECT EXISTS (SELECT 1 FROM watch_later WHERE videoId=:videId) ")
     fun exists(videId:String):LiveData<Boolean>
 
     @Query("SELECT * FROM watch_later")
     fun getAll():LiveData<List<WatchLaterVideo>>
-
-    @Query("SELECT * FROM watch_later WHERE videoId=:videoId")
-    suspend fun getItem(videoId:String):WatchLaterVideo
-
 }
