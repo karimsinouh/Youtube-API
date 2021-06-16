@@ -30,7 +30,7 @@ object SingletonsModule {
 
     @Provides
     @Singleton
-    fun database(@ApplicationContext c:Context)= Room.databaseBuilder(c,Database::class.java,"database")
+    fun database(@ApplicationContext c:Context)= Room.databaseBuilder(c,Database::class.java,"database").build()
 
     @Provides
     @Singleton

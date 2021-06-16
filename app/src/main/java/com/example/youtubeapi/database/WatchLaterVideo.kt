@@ -8,6 +8,5 @@ data class WatchLaterVideo (
     val videoId:String,
     val thumbnail:String,
     val title:String,
-){
-    @PrimaryKey(autoGenerate = true) val id:Int=0
-}
+    @PrimaryKey(autoGenerate = true) val id:Int
+)

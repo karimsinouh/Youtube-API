@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,25 +18,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.youtubeapi.R
 import com.example.youtubeapi.data.items.PlaylistItem
-import com.example.youtubeapi.ui.downloads.Downloads
-import com.example.youtubeapi.ui.favorites.Favorites
+import com.example.youtubeapi.ui.watchLater.Favorites
 import com.example.youtubeapi.ui.playlists.Playlists
 import com.example.youtubeapi.ui.theme.Shapes
 import com.example.youtubeapi.ui.videos.Videos
 import com.example.youtubeapi.ui.viewPlaylist.ViewPlaylist
-import com.example.youtubeapi.ui.viewPlaylist.ViewPlaylistViewModel
 import com.example.youtubeapi.ui.viewVideo.ViewVideo
-import com.example.youtubeapi.ui.viewVideo.ViewVideoViewModel
 import com.example.youtubeapi.utils.ExpandableStickyHeader
-import com.example.youtubeapi.utils.StickyHeader
 import com.example.youtubeapi.utils.findPlaylistById
 
 @Composable
@@ -133,7 +126,7 @@ fun MainNavHost(
         }
 
         composable(Screen.WatchLater.route){
-            Favorites()
+            Favorites(vm)
         }
 
         composable("${Screen.ViewVideo.route}/{videoId}"){

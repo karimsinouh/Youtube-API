@@ -1,12 +1,15 @@
 package com.example.youtubeapi.ui.main
 
-import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.youtubeapi.api.Repository
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.data.screen.*
+import com.example.youtubeapi.database.DAO
+import com.example.youtubeapi.database.WatchLaterVideo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -14,16 +17,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repo: Repository
+    private val repo: Repository,
+    private val db:DAO,
 ): ViewModel() {
 
     val videosState= ScreenState.getInstance<VideoItem>()
     val playlistsState= ScreenState.getInstance<PlaylistItem>()
 
+    val watchLater= mutableStateOf<List<WatchLaterVideo>>(emptyList())
+
     init {
         viewModelScope.launch {
             loadVideos()
             loadPlaylists()
+            watchLater.value=db.getAll()
         }
     }
 
@@ -58,5 +65,7 @@ class MainViewModel @Inject constructor(
 
         }
     }
+
+
 
 }
