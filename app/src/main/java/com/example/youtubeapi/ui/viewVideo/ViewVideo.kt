@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.ui.videos.VideoItemSmall
@@ -19,6 +20,8 @@ fun ViewVideo(
     videos:MutableState<List<VideoItem>>,
     vm:ViewVideoViewModel=hiltViewModel()
 ){
+
+    val inWatchLater=vm.exists(videoId).observeAsState(false)
 
     LaunchedEffect(videoId){
         vm.loadVideo(videoId)
@@ -41,9 +44,11 @@ fun ViewVideo(
 
                     item {
                         video.statistics?.Show(
-                            inWatchLater = false,
+                            inWatchLater = inWatchLater.value,
                             onShare = { },
-                            onWatchLater = {}
+                            onWatchLater = {
+                                vm.onWatchLater(videoId,it)
+                            }
                         )
                     }
 

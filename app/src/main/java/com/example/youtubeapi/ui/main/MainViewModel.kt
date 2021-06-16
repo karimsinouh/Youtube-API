@@ -24,13 +24,11 @@ class MainViewModel @Inject constructor(
     val videosState= ScreenState.getInstance<VideoItem>()
     val playlistsState= ScreenState.getInstance<PlaylistItem>()
 
-    val watchLater= mutableStateOf<List<WatchLaterVideo>>(emptyList())
 
     init {
         viewModelScope.launch {
             loadVideos()
             loadPlaylists()
-            watchLater.value=db.getAll()
         }
     }
 
@@ -66,6 +64,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-
+    val watchLater=db.getAll()
 
 }

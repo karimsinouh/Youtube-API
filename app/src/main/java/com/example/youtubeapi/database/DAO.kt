@@ -1,5 +1,6 @@
 package com.example.youtubeapi.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -15,9 +16,12 @@ interface DAO {
     suspend fun removeFromWatchLater(item:WatchLaterVideo)
 
     @Query(" SELECT EXISTS (SELECT 1 FROM watch_later WHERE videoId=:videId) ")
-    suspend fun exists(videId:String):Boolean
+    fun exists(videId:String):LiveData<Boolean>
 
     @Query("SELECT * FROM watch_later")
-    suspend fun getAll():List<WatchLaterVideo>
+    fun getAll():LiveData<List<WatchLaterVideo>>
+
+    @Query("SELECT * FROM watch_later WHERE videoId=:videoId")
+    suspend fun getItem(videoId:String):WatchLaterVideo
 
 }

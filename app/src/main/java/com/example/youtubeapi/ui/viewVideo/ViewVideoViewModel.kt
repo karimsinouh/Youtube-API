@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.youtubeapi.api.Repository
 import com.example.youtubeapi.data.items.VideoItem
+import com.example.youtubeapi.database.DAO
+import com.example.youtubeapi.database.WatchLaterVideo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewVideoViewModel @Inject constructor(
-    private val repo:Repository
+    private val repo:Repository,
+    private val db:DAO,
 ):ViewModel() {
 
     val video= mutableStateOf<VideoItem?>(null)
@@ -34,6 +37,25 @@ class ViewVideoViewModel @Inject constructor(
 
     fun setMessage(value:String?){
         message.value=value
+    }
+
+    fun exists(videoId:String)=db.exists(videoId)
+
+    private suspend fun addToWatchLater(){
+        val item=video.value?.toWatchLaterItem()
+        db.addToWatchLater(item!!)
+    }
+
+    private suspend fun removeFromWatchLater(id:String){
+        val item=db.getItem(id)
+        db.removeFromWatchLater(item)
+    }
+
+    fun onWatchLater(id:String,added:Boolean)=viewModelScope.launch{
+        if (added)
+            addToWatchLater()
+        else
+            removeFromWatchLater(id)
     }
 
 }

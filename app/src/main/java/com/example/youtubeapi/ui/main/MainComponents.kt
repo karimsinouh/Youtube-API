@@ -24,7 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.youtubeapi.R
 import com.example.youtubeapi.data.items.PlaylistItem
-import com.example.youtubeapi.ui.watchLater.Favorites
+import com.example.youtubeapi.ui.watchLater.WatchLater
 import com.example.youtubeapi.ui.playlists.Playlists
 import com.example.youtubeapi.ui.theme.Shapes
 import com.example.youtubeapi.ui.videos.Videos
@@ -126,7 +126,7 @@ fun MainNavHost(
         }
 
         composable(Screen.WatchLater.route){
-            Favorites(vm)
+            WatchLater(vm,controller)
         }
 
         composable("${Screen.ViewVideo.route}/{videoId}"){
@@ -210,7 +210,7 @@ fun MainDrawer(
 
                     playlists.forEach {
                         ListItem(
-                            text = { Text(text = it.snippet.title) },
+                            text = { Text(text = it.snippet.title,maxLines = 1) },
                             overlineText = { Text("${it.contentDetails.itemCount} videos") }
                         )
                     }
