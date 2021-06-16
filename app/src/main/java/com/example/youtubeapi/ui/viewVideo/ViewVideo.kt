@@ -47,7 +47,7 @@ fun ViewVideo(
                             inWatchLater = inWatchLater.value,
                             onShare = { },
                             onWatchLater = {
-                                vm.onWatchLater(videoId,it)
+                                vm.onWatchLater(video.snippet.resourceId?.videoId!!,it)
                             }
                         )
                     }
@@ -58,7 +58,7 @@ fun ViewVideo(
                     items(videos.value){item ->
                         VideoItemSmall(item.snippet) {
                             vm.setVideo(null)
-                            vm.loadVideo(item.id!!)
+                            vm.loadVideo(item.snippet.resourceId?.videoId!!)
                         }
                     }
 

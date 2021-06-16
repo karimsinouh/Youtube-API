@@ -1,5 +1,6 @@
 package com.example.youtubeapi.ui.viewVideo
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,6 +23,7 @@ class ViewVideoViewModel @Inject constructor(
     val message= mutableStateOf<String?>(null)
 
     fun loadVideo(id:String)=viewModelScope.launch{
+        Log.d("wtf",id)
         delay(1000)
         repo.getVideo(id){
             if (it.isSuccessful)
@@ -47,8 +49,7 @@ class ViewVideoViewModel @Inject constructor(
     }
 
     private suspend fun removeFromWatchLater(id:String){
-        val item=db.getItem(id)
-        db.removeFromWatchLater(item)
+        db.removeFromWatchLater(id)
     }
 
     fun onWatchLater(id:String,added:Boolean)=viewModelScope.launch{
