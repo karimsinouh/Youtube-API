@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.youtubeapi.api.Repository
 import com.example.youtubeapi.data.items.VideoItem
+import com.example.youtubeapi.database.DAO
 import com.example.youtubeapi.utils.addAll
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewPlaylistViewModel @Inject constructor(
-    private val youtube:Repository
+    private val youtube:Repository,
+    private val db:DAO
 ) :ViewModel() {
 
     var pageToken=""
@@ -46,6 +48,24 @@ class ViewPlaylistViewModel @Inject constructor(
                 message.value=it.message
 
         }
+    }
+
+    fun exists(videoId:String)=db.exists(videoId)
+
+    private suspend fun addToWatchLater(){
+        val item=video.value?.toWatchLaterItem()
+        db.addToWatchLater(item!!)
+    }
+
+    private suspend fun removeFromWatchLater(id:String){
+        db.removeFromWatchLater(id)
+    }
+
+    fun onWatchLater(id:String,added:Boolean)=viewModelScope.launch{
+        if (added)
+            addToWatchLater()
+        else
+            removeFromWatchLater(id)
     }
 
 }

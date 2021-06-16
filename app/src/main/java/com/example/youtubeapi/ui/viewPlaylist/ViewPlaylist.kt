@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.utils.CenterProgress
@@ -50,13 +51,16 @@ fun ViewPlaylist(
 
                 if(!vm.isLoadingVideo.value)
                     item {
-                        vm.video.value?.let {
+                        vm.video.value?.let { video ->
+
+                            val inWatchLater=vm.exists(video.id!!).observeAsState(false)
+
                             Column {
-                                it.snippet.Show {}
-                                it.statistics?.Show(
-                                    inWatchLater = true,
+                                video.snippet.Show {}
+                                video.statistics?.Show(
+                                    inWatchLater = inWatchLater.value,
                                     onShare = {  },
-                                    onWatchLater = {  }
+                                    onWatchLater = { vm.onWatchLater(video.id,it) }
                                 )
                             }
                         }
