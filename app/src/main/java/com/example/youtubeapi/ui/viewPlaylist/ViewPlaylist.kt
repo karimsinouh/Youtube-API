@@ -24,8 +24,7 @@ fun ViewPlaylist(
 
 
     LaunchedEffect(playlist.id){
-        if(vm.videos.value==null)
-            vm.loadVideos(playlist.id)
+        vm.loadVideos(playlist.id)
     }
 
     Column {

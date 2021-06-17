@@ -26,20 +26,21 @@ fun Playlists(
 ){
     vm.playlistsState.apply {
 
-        if (isLoading.value && nextPageToken=="" && items.value.isEmpty())
+        val videos=items.value
+
+        if (isLoading.value && nextPageToken=="" && videos.isEmpty())
             CenterProgress()
         else
             LazyColumn {
-                itemsIndexed(items.value){index,item->
+                itemsIndexed(videos){index,item->
                     PlaylistItem(item){
                         nav.navigate("viewPlaylist/${item.id}")
                     }
 
-                    if((index+1)==items.value.size){
+                    if((index+1)==videos.size){
                         //the end of the list has been reached
-                        val canLoadMore=(nextPageToken!="" || items.value.isEmpty() && nextPageToken=="")  && !isLoadingMore
 
-                        if (canLoadMore)
+                        if (nextPageToken!="")
                             LaunchedEffect(nextPageToken){
                                 vm.loadPlaylists()
                             }

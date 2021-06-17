@@ -153,8 +153,8 @@ fun MainDrawer(
     playlists:List<PlaylistItem>,
     onDarkModeChanges:()->Unit,
     onNavigate:(Screen)->Unit,
+    onPlaylistClick:(String)->Unit
 ){
-
     val showPlaylists= remember {
         mutableStateOf(true)
     }
@@ -211,7 +211,8 @@ fun MainDrawer(
                     playlists.forEach {
                         ListItem(
                             text = { Text(text = it.snippet.title,maxLines = 1) },
-                            overlineText = { Text("${it.contentDetails.itemCount} videos") }
+                            overlineText = { Text("${it.contentDetails.itemCount} videos") },
+                            modifier=Modifier.clickable { onPlaylistClick(it.id) }
                         )
                     }
 

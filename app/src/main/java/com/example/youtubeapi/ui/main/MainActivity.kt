@@ -8,15 +8,15 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.youtubeapi.ui.theme.DrawerShape
 import com.example.youtubeapi.ui.theme.YoutubeAPITheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -24,22 +24,27 @@ class MainActivity : ComponentActivity() {
 
     val vm by viewModels<MainViewModel>()
 
+    private lateinit var navController: NavHostController
+    private lateinit var scope:CoroutineScope
+    private lateinit var currentScreen:MutableState<Screen>
+    private lateinit var darkTheme:MutableState<Boolean>
+    @ExperimentalMaterialApi
+    private lateinit var scaffoldState: BottomSheetScaffoldState
+
     @ExperimentalAnimationApi
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
 
-            val navController= rememberNavController()
-            val currentScreen=remember{ mutableStateOf<Screen>(Screen.Videos) }
-            val scaffoldState= rememberBottomSheetScaffoldState()
-            val scope= rememberCoroutineScope()
-            val darkTheme=remember { mutableStateOf(false) }
 
-
+            scope= rememberCoroutineScope()
+            navController= rememberNavController()
+            currentScreen=remember{ mutableStateOf(Screen.Videos) }
+            scaffoldState= rememberBottomSheetScaffoldState()
+            darkTheme=remember { mutableStateOf(false) }
 
             darkTheme.value= isSystemInDarkTheme()
-
 
             YoutubeAPITheme(darkTheme.value) {
 
@@ -49,52 +54,10 @@ class MainActivity : ComponentActivity() {
 
                     BottomSheetScaffold(
                         sheetContent = {MainSheet()},
-                        topBar = {
-                            if (
-                                currentScreen.value.route==Screen.Videos.route ||
-                                currentScreen.value.route==Screen.Playlists.route ||
-                                currentScreen.value.route==Screen.WatchLater.route
-                            )
-                                Column {
-
-                                    MainToolbar(
-                                        onNavigationClick = {
-                                                            scope.launch {
-                                                                scaffoldState.drawerState.open()
-                                                            }
-                                        },
-                                        onSearchClick = {})
-                                    MainRow(currentScreen.value.position!!) {
-                                        currentScreen.value=it
-                                        navController.navigate(it.route){
-                                            popUpTo(Screen.Videos.route)
-                                            launchSingleTop=true
-                                        }
-                                    }
-                                }
-                        },
+                        topBar = {TopBar()},
                         sheetPeekHeight = 0.dp,
                         drawerShape = DrawerShape,
-                        drawerContent = {
-                            MainDrawer(
-                                darkMode = darkTheme.value,
-                                selectedScreenRoute = currentScreen.value.route,
-                                onDarkModeChanges = {
-                                    darkTheme.value=false
-                                                    },
-                                onNavigate = {
-                                    currentScreen.value=it
-                                    navController.navigate(it.route){
-                                        popUpTo(Screen.Videos.route)
-                                        launchSingleTop=true
-                                    }
-                                    scope.launch {
-                                        scaffoldState.drawerState.close()
-                                    }
-                                },
-                                playlists = vm.playlistsState.items.value
-                            )
-                                        },
+                        drawerContent = { Drawer() },
                         drawerBackgroundColor = MaterialTheme.colors.background,
                         drawerContentColor = MaterialTheme.colors.onBackground,
                         scaffoldState = scaffoldState
@@ -112,5 +75,66 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    @ExperimentalMaterialApi
+    @Composable
+    private fun TopBar() {
+        currentScreen.value.let {
+            if (
+                it.route==Screen.Videos.route ||
+                it.route==Screen.Playlists.route ||
+                it.route==Screen.WatchLater.route
+            )
+                Column {
+
+                    MainToolbar(
+                        onNavigationClick = {
+                            scope.launch {
+                                scaffoldState.drawerState.open()
+                            }
+                        },
+                        onSearchClick = {})
+
+                    MainRow(it.position!!) {destination->
+                        navigate(destination)
+                    }
+                }
+        }
+    }
+
+
+    @ExperimentalMaterialApi
+    @ExperimentalAnimationApi
+    @Composable
+    private fun Drawer(){
+        MainDrawer(
+            darkMode = darkTheme.value,
+            selectedScreenRoute = currentScreen.value.route,
+            onDarkModeChanges = {
+                darkTheme.value=false
+            },
+            onNavigate = {
+                navigate(it)
+                scope.launch {
+                    scaffoldState.drawerState.close()
+                }
+            },
+            playlists = vm.playlistsState.items.value,
+            onPlaylistClick = {
+                navController.navigate("viewPlaylist/$it"){
+                    launchSingleTop=true
+                }
+            }
+        )
+    }
+
+
+    private fun navigate(screen:Screen){
+        navController.navigate(screen.route){
+            popUpTo(Screen.Videos.route)
+            launchSingleTop=true
+        }
+    }
+
 
 }

@@ -1,11 +1,9 @@
 package com.example.youtubeapi.ui.videos
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -17,8 +15,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.youtubeapi.data.Snippet
-import com.example.youtubeapi.data.items.VideoItem
-import com.example.youtubeapi.data.screen.ScreenState
 import com.example.youtubeapi.ui.main.MainViewModel
 import com.example.youtubeapi.utils.CenterProgress
 import com.example.youtubeapi.utils.CoilImage
@@ -32,22 +28,23 @@ fun Videos(
 ){
     vm.videosState.apply{
 
-        if (isLoading.value && nextPageToken=="" && items.value.isEmpty() )
+        val videos=items.value
+
+        if (isLoading.value && nextPageToken=="" && videos.isEmpty() )
             CenterProgress()
         else
             LazyColumn {
-                itemsIndexed(items.value){index,item->
 
-                    val uid=item.snippet.resourceId?.videoId!!
-                    VideoItem(videoId = uid, snippet =item.snippet ) {
-                        nav.navigate("viewVideo/${item.snippet.resourceId.videoId}")
+                itemsIndexed(videos){index,item->
+
+                    val vid=item.snippet.resourceId?.videoId!!
+                    VideoItem(snippet =item.snippet ) {
+                        nav.navigate("viewVideo/$vid")
                     }
 
-                    if ((index+1)==items.value.size){
+                    if ((index+1)==videos.size){
                         //end of list reached
-                        val canLoadMore=nextPageToken!="" || items.value.isEmpty() && nextPageToken==""
-
-                        if (!isLoadingMore && canLoadMore)
+                        if (nextPageToken!="")
                             LaunchedEffect(nextPageToken){
                                 vm.loadVideos()
                             }
@@ -67,7 +64,6 @@ fun Videos(
 
 @Composable
 fun VideoItem(
-    videoId:String,
     snippet:Snippet,
     onClick:()->Unit
 ){

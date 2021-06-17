@@ -21,8 +21,6 @@ fun ViewVideo(
     vm:ViewVideoViewModel=hiltViewModel()
 ){
 
-    val inWatchLater=vm.exists(videoId).observeAsState(false)
-
     LaunchedEffect(videoId){
         vm.loadVideo(videoId)
     }
@@ -33,6 +31,8 @@ fun ViewVideo(
             ViewVideoPlaceholder()
         else
             Column{
+
+                val inWatchLater=vm.exists(video.id!!).observeAsState(false)
 
                 video.snippet.thumbnails?.Show {}
 
@@ -47,7 +47,7 @@ fun ViewVideo(
                             inWatchLater = inWatchLater.value,
                             onShare = { },
                             onWatchLater = {
-                                vm.onWatchLater(video.id!!,it)
+                                vm.onWatchLater(video.id,it)
                             }
                         )
                     }
