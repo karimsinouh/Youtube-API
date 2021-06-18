@@ -8,9 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.ui.videos.VideoItemSmall
+import com.example.youtubeapi.uiplayVideo.PlayVideoActivity
 import com.example.youtubeapi.utils.StickyHeader
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -20,6 +22,8 @@ fun ViewVideo(
     videos:MutableState<List<VideoItem>>,
     vm:ViewVideoViewModel=hiltViewModel()
 ){
+
+    val context= LocalContext.current
 
     LaunchedEffect(videoId){
         vm.loadVideo(videoId)
@@ -34,7 +38,9 @@ fun ViewVideo(
 
                 val inWatchLater=vm.exists(video.id!!).observeAsState(false)
 
-                video.snippet.thumbnails?.Show {}
+                video.snippet.thumbnails?.Show {
+                    PlayVideoActivity.open(context,video.id)
+                }
 
                 LazyColumn {
 

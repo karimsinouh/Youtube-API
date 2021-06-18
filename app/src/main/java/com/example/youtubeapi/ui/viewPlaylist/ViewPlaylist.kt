@@ -8,11 +8,13 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.utils.CenterProgress
 import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.ui.viewVideo.Show
+import com.example.youtubeapi.uiplayVideo.PlayVideoActivity
 import com.example.youtubeapi.utils.StickyHeader
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -22,6 +24,7 @@ fun ViewPlaylist(
     vm:ViewPlaylistViewModel = hiltViewModel(),
 ){
 
+    val context= LocalContext.current
 
     LaunchedEffect(playlist.id){
         vm.loadVideos(playlist.id)
@@ -36,7 +39,9 @@ fun ViewPlaylist(
                 playlist.snippet.thumbnails?.Show(false){}
                 playlist.snippet.Show {}
             }else if (!vm.isLoadingVideo.value){
-                video.snippet.thumbnails?.Show {}
+                video.snippet.thumbnails?.Show {
+                    PlayVideoActivity.open(context,video.id!!)
+                }
             }
 
         }
