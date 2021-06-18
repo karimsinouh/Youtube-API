@@ -16,22 +16,24 @@ sealed class Screen(
 
         val rowItems = listOf(Videos,Playlists,WatchLater)
 
-        val drawerItems= listOf(Videos,Playlists,WatchLater)
+        val drawerItems= listOf(Videos,Playlists,WatchLater,Search)
 
         val all=listOf(
             Videos,
             Playlists,
             WatchLater,
             ViewVideo,
-            ViewPlaylist
+            ViewPlaylist,
+            Search
         )
     }
 
     object Videos:Screen("videos", R.string.videos, R.drawable.ic_videos,0)
     object Playlists:Screen("playlists", R.string.playlists, R.drawable.ic_playlist,1)
     object WatchLater:Screen("watchlater", R.string.favorites, R.drawable.ic_favorite,2)
-    object ViewVideo:Screen("viewVideo", R.string.videos,position = 4)
-    object ViewPlaylist:Screen("viewPlaylist", R.string.playlists,position = 5)
+    object ViewVideo:Screen("viewVideo", R.string.videos)
+    object ViewPlaylist:Screen("viewPlaylist", R.string.playlists)
+    object Search:Screen("search",R.string.search,R.drawable.ic_search)
 
 }
 fun findByRoute(route:String):Screen{

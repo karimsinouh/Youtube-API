@@ -26,6 +26,7 @@ import com.example.youtubeapi.R
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.ui.watchLater.WatchLater
 import com.example.youtubeapi.ui.playlists.Playlists
+import com.example.youtubeapi.ui.search.Search
 import com.example.youtubeapi.ui.theme.Shapes
 import com.example.youtubeapi.ui.videos.Videos
 import com.example.youtubeapi.ui.viewPlaylist.ViewPlaylist
@@ -116,6 +117,9 @@ fun MainNavHost(
         startDestination = Screen.Videos.route
     ){
 
+        composable(Screen.Search.route){
+            Search(nav = controller)
+        }
 
         composable(Screen.Videos.route){
             Videos(vm,controller)
@@ -181,7 +185,7 @@ fun MainDrawer(
         Spacer(modifier = Modifier.height(8.dp))
 
         //navigation
-        Screen.Items.rowItems.forEach {
+        Screen.Items.drawerItems.forEach {
 
             val isSelected=selectedScreenRoute==it.route
 

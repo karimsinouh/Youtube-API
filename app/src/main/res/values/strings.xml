@@ -4,4 +4,5 @@
     <string name="playlists">Playlists</string>
     <string name="favorites">Watch Later</string>
     <string name="doanloads">Downloads</string>
+    <string name="search">Search</string>
 </resources>

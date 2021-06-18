@@ -102,7 +102,9 @@ class MainActivity : ComponentActivity() {
                                 scaffoldState.drawerState.open()
                             }
                         },
-                        onSearchClick = {})
+                        onSearchClick = {
+                            navController.navigate(Screen.Search.route)
+                        })
 
                     MainRow(it.position!!) {destination->
                         navigate(destination)
