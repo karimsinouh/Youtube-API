@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
@@ -15,6 +18,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.youtubeapi.ui.theme.DrawerShape
 import com.example.youtubeapi.ui.theme.YoutubeAPITheme
+import com.example.youtubeapi.utils.isDarkMode
+import com.example.youtubeapi.utils.setDarkMode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -35,6 +40,8 @@ class MainActivity : ComponentActivity() {
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(if (isDarkMode()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO )
+
         setContent {
 
 
@@ -44,13 +51,15 @@ class MainActivity : ComponentActivity() {
             scaffoldState= rememberBottomSheetScaffoldState()
             darkTheme=remember { mutableStateOf(false) }
 
-            darkTheme.value= isSystemInDarkTheme()
+            //theming
+            darkTheme.value=isDarkMode()
 
             YoutubeAPITheme(darkTheme.value) {
 
-                Surface(color = MaterialTheme.colors.background) {
-
                 window.statusBarColor=MaterialTheme.colors.surface.toArgb()
+
+
+                Surface(color = MaterialTheme.colors.background) {
 
                     BottomSheetScaffold(
                         sheetContent = {MainSheet()},
@@ -111,7 +120,7 @@ class MainActivity : ComponentActivity() {
             darkMode = darkTheme.value,
             selectedScreenRoute = currentScreen.value.route,
             onDarkModeChanges = {
-                darkTheme.value=false
+                setDarkTheme(it)
             },
             onNavigate = {
                 navigate(it)
@@ -128,6 +137,10 @@ class MainActivity : ComponentActivity() {
         )
     }
 
+    private fun setDarkTheme(value:Boolean){
+        darkTheme.value=value
+        setDarkMode(value)
+    }
 
     private fun navigate(screen:Screen){
         navController.navigate(screen.route){

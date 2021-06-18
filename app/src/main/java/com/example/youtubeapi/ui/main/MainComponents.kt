@@ -151,7 +151,7 @@ fun MainDrawer(
     darkMode:Boolean,
     selectedScreenRoute: String,
     playlists:List<PlaylistItem>,
-    onDarkModeChanges:()->Unit,
+    onDarkModeChanges:(Boolean)->Unit,
     onNavigate:(Screen)->Unit,
     onPlaylistClick:(String)->Unit
 ){
@@ -167,7 +167,7 @@ fun MainDrawer(
             contentAlignment = Alignment.CenterEnd
         ) {
             IconButton(onClick = {
-                onDarkModeChanges()
+                onDarkModeChanges(!darkMode)
             }) {
                 if (darkMode){
                     Icon(painter = painterResource(R.drawable.ic_light_mode), null)
