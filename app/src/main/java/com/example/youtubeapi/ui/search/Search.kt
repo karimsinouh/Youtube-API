@@ -2,6 +2,8 @@ package com.example.youtubeapi.ui.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Icon
@@ -11,12 +13,17 @@ import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.youtubeapi.ui.videos.VideoItem
+import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.utils.CenterProgress
 
 @Composable
@@ -28,8 +35,24 @@ fun Search(vm:SearchViewModel= hiltViewModel(),nav:NavController){
                 SearchBar(
                     vm.searchQuery.value,
                     onValueChange = {vm.searchQuery.value=it}
-                ) {}
-                CenterProgress()
+                ) {
+                    vm.search()
+                }
+
+                Spacer(Modifier.height(8.dp))
+
+                if (vm.isLoading.value && vm.pageToken==""){
+                    CenterProgress()
+                }else{
+
+                    LazyColumn {
+                        items(vm.items){item->
+                            VideoItem(snippet = item.snippet) {}
+                        }
+                    }
+
+                }
+
             }
 
         }
@@ -55,10 +78,11 @@ fun SearchBar(
         BasicTextField(
             modifier= Modifier
                 .weight(0.9f)
-                .height(50.dp),
+                .padding(12.dp),
             value = value,
             onValueChange = { onValueChange(it) },
-            singleLine = true
+            singleLine = true,
+            textStyle = TextStyle(color = MaterialTheme.colors.onSurface)
         )
 
         IconButton(onClick = { onSearchClick() }) {
