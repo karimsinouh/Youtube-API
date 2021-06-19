@@ -198,9 +198,11 @@ fun MainDrawer(
                 text={ Text(stringResource(it.title),color=contentColor) },
                 modifier = Modifier
                     .clickable { onNavigate(it) }
-                    .background(backgroundColor)
-                    .clip(Shapes.small),
+                    .clip(Shapes.small)
+                    .background(backgroundColor),
             )
+
+            Spacer(Modifier.height(4.dp))
         }
 
         if(playlists.isNotEmpty()){
@@ -215,7 +217,7 @@ fun MainDrawer(
                     playlists.forEach {
                         ListItem(
                             text = { Text(text = it.snippet.title,maxLines = 1) },
-                            overlineText = { Text("${it.contentDetails.itemCount} videos") },
+                            overlineText = { Text("${it.contentDetails?.itemCount} videos") },
                             modifier=Modifier.clickable { onPlaylistClick(it.id) }
                         )
                     }

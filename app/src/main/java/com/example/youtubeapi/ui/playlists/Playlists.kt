@@ -87,7 +87,9 @@ fun PlaylistItem(
 
             Column {
                 Text(text = item.snippet.title,fontSize = 18.sp,maxLines = 3)
-                Text(text = "${item.contentDetails.itemCount} videos",fontSize = 12.sp,maxLines = 1)
+                item.contentDetails?.itemCount?.let { itemCount->
+                    Text(text = "$itemCount videos",fontSize = 12.sp,maxLines = 1)
+                }
             }
         }
     }

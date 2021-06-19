@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Icon
@@ -22,6 +23,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.youtubeapi.data.items.SearchItem
+import com.example.youtubeapi.ui.playlists.PlaylistItem
 import com.example.youtubeapi.ui.videos.VideoItem
 import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.utils.CenterProgress
@@ -29,26 +32,57 @@ import com.example.youtubeapi.utils.CenterProgress
 @Composable
 fun Search(vm:SearchViewModel= hiltViewModel(),nav:NavController){
 
-        Surface {
+        Surface(color=MaterialTheme.colors.background) {
 
             Column(Modifier.padding(12.dp)) {
                 SearchBar(
                     vm.searchQuery.value,
                     onValueChange = {vm.searchQuery.value=it}
                 ) {
+                    vm.pageToken=""
+                    vm.items.clear()
                     vm.search()
                 }
 
                 Spacer(Modifier.height(8.dp))
 
-                if (vm.isLoading.value && vm.pageToken==""){
+                val isLoading=vm.isLoading.value
+
+                if (isLoading && vm.pageToken==""){
                     CenterProgress()
                 }else{
-
+                    val items=vm.items
                     LazyColumn {
-                        items(vm.items){item->
-                            VideoItem(snippet = item.snippet) {}
+
+
+                        itemsIndexed(items){index,item->
+                            SearchItem(
+                                item=item,
+                                onPlaylistClick = {
+                                    nav.navigate("viewPlaylist/$it")
+                                },
+                                onVideoClick = {
+                                    nav.navigate("viewVideo/$it")
+                                }
+                            )
+
+                            if ((index+1)==items.size){
+                                //the end of the list has been reached
+                                if(vm.pageToken!="" && !isLoading){
+                                    SideEffect {
+                                        vm.search()
+                                    }
+                                }
+                            }
+
                         }
+
+                        if(isLoading && vm.pageToken!=""){
+                            item {
+                                CenterProgress(false)
+                            }
+                        }
+
                     }
 
                 }
@@ -60,7 +94,7 @@ fun Search(vm:SearchViewModel= hiltViewModel(),nav:NavController){
 }
 
 @Composable
-fun SearchBar(
+private fun SearchBar(
     value:String,
     onValueChange:(q:String)->Unit,
     onSearchClick:()->Unit
@@ -87,6 +121,23 @@ fun SearchBar(
 
         IconButton(onClick = { onSearchClick() }) {
             Icon(Icons.Outlined.Search,"")
+        }
+    }
+}
+
+@Composable
+private fun SearchItem(
+    item:SearchItem,
+    onPlaylistClick:(String)->Unit,
+    onVideoClick:(String)->Unit
+){
+    if(item.id.kind=="youtube#video"){
+        VideoItem(snippet = item.snippet) {
+            onVideoClick(item.id.videoId!!)
+        }
+    }else if(item.id.kind=="youtube#playlist"){
+        PlaylistItem(item = item.asPlaylistItem()) {
+            onPlaylistClick(item.id.playlistId!!)
         }
     }
 }

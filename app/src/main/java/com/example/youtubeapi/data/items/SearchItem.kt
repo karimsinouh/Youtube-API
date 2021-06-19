@@ -8,4 +8,9 @@ data class SearchItem (
     val etag:String,
     val snippet: Snippet,
     val id: ResourceId,
-)
+){
+    fun asPlaylistItem():PlaylistItem{
+        return PlaylistItem(kind,etag,snippet,id.playlistId?:"")
+    }
+
+}

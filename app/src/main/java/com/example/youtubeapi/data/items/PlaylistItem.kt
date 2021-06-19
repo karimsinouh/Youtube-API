@@ -10,5 +10,5 @@ data class PlaylistItem(
     val etag:String,
     val snippet: Snippet,
     val id:String,
-    val contentDetails: ContentDetails,
-):Serializable
+    val contentDetails: ContentDetails?=null,
+)

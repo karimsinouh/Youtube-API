@@ -1,5 +1,6 @@
 package com.example.youtubeapi.ui.search
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.example.youtubeapi.api.Repository
 import com.example.youtubeapi.data.items.SearchItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +25,9 @@ class SearchViewModel @Inject constructor(
     var pageToken=""
 
     fun search()=viewModelScope.launch{
+        delay(1000)
+        Log.d("wtf","${items.size}")
+
         isLoading.value=true
         youtube.search(searchQuery.value,pageToken){
             isLoading.value=false
@@ -34,6 +39,5 @@ class SearchViewModel @Inject constructor(
 
         }
     }
-
 
 }

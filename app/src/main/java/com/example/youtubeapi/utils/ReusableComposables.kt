@@ -89,7 +89,7 @@ fun CoilImage(
 fun CenterProgress(fullHeight:Boolean=true){
     Box(
         modifier = if (fullHeight) Modifier.fillMaxSize() else Modifier
-            .padding(8.dp, 0.dp,)
+            .padding(12.dp, 0.dp,)
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ){
