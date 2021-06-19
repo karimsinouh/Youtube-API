@@ -4,15 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -20,6 +15,8 @@ import com.example.youtubeapi.ui.theme.DrawerShape
 import com.example.youtubeapi.ui.theme.YoutubeAPITheme
 import com.example.youtubeapi.utils.isDarkMode
 import com.example.youtubeapi.utils.setDarkMode
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -35,29 +32,30 @@ class MainActivity : ComponentActivity() {
     private lateinit var darkTheme:MutableState<Boolean>
     @ExperimentalMaterialApi
     private lateinit var scaffoldState: BottomSheetScaffoldState
+    private lateinit var uiController:SystemUiController
 
     @ExperimentalAnimationApi
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppCompatDelegate.setDefaultNightMode(if (isDarkMode()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO )
-
         setContent {
-
 
             scope= rememberCoroutineScope()
             navController= rememberNavController()
             currentScreen=remember{ mutableStateOf(Screen.Videos) }
             scaffoldState= rememberBottomSheetScaffoldState()
             darkTheme=remember { mutableStateOf(false) }
+            uiController= rememberSystemUiController()
 
             //theming
             darkTheme.value=isDarkMode()
 
             YoutubeAPITheme(darkTheme.value) {
 
-                window.statusBarColor=MaterialTheme.colors.surface.toArgb()
-
+                uiController.setSystemBarsColor(
+                    color = MaterialTheme.colors.background,
+                    darkIcons = !darkTheme.value
+                )
 
                 Surface(color = MaterialTheme.colors.background) {
 

@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,7 +31,7 @@ fun ViewVideo(
         vm.loadVideo(videoId)
     }
 
-    Surface() {
+    Surface(color=MaterialTheme.colors.background) {
         vm.video.value.let { video ->
 
             if (video == null)

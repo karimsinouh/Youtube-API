@@ -27,8 +27,9 @@ fun Playlists(
     vm.playlistsState.apply {
 
         val videos=items.value
+        val isLoading=isLoading.value
 
-        if (isLoading.value && nextPageToken=="" && videos.isEmpty())
+        if (isLoading && nextPageToken=="" && videos.isEmpty())
             CenterProgress()
         else
             LazyColumn {
@@ -40,14 +41,14 @@ fun Playlists(
                     if((index+1)==videos.size){
                         //the end of the list has been reached
 
-                        if (nextPageToken!="")
+                        if (!isLoading && nextPageToken!="")
                             LaunchedEffect(nextPageToken){
                                 vm.loadPlaylists()
                             }
                     }
                 }
 
-                val isLoadingMore=isLoading.value && nextPageToken!=""
+                val isLoadingMore=isLoading && nextPageToken!=""
                 if (isLoadingMore)
                     item{
                         CenterProgress(false)

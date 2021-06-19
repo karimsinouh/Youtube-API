@@ -29,8 +29,9 @@ fun Videos(
     vm.videosState.apply{
 
         val videos=items.value
+        val isLoading=isLoading.value
 
-        if (isLoading.value && nextPageToken=="" && videos.isEmpty() )
+        if (isLoading && nextPageToken=="" && videos.isEmpty() )
             CenterProgress()
         else
             LazyColumn {
@@ -52,7 +53,7 @@ fun Videos(
 
                 }
 
-                val isLoadingMore=isLoading.value && nextPageToken!=""
+                val isLoadingMore=isLoading && nextPageToken!=""
                 if (isLoadingMore){
                     item {
                         CenterProgress(false)
