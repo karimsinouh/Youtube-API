@@ -1,8 +1,10 @@
 package com.example.youtubeapi.ui.viewVideo
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -21,18 +23,22 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.youtubeapi.R
 import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.data.Statistics
 import com.example.youtubeapi.data.thumbnails.Thumbnails
+import com.example.youtubeapi.ui.theme.PlaceholderColor
 import com.example.youtubeapi.utils.CoilImage
 import com.example.youtubeapi.utils.Placeholder
 import com.example.youtubeapi.utils.defaultThumbnail
+import kotlin.random.Random
 
 
 @Composable
+@Preview
 fun ViewVideoPlaceholder(){
     Column(Modifier.fillMaxSize()) {
         Placeholder(200)
@@ -43,10 +49,58 @@ fun ViewVideoPlaceholder(){
         ) {
             Placeholder(25)
             Placeholder(20,120)
+            Placeholder(20,220)
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 18.dp)
+            ){
+                repeat(5) {
+                    Box(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(25.dp)
+                            .background(PlaceholderColor)
+                    )
+                }
+            }
+
+            repeat(5){
+                VideosListPlaceholder()
+            }
         }
 
     }
 }
+
+@Composable
+@Preview
+fun VideosListPlaceholder(){
+    Row (
+        modifier = Modifier.fillMaxWidth()
+    ){
+        Box(modifier = Modifier
+            .width(120.dp)
+            .height(70.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(PlaceholderColor)
+        )
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            repeat(2){
+                Box(modifier = Modifier
+                    .width(Random.nextInt(100, 200).dp)
+                    .height(20.dp)
+                    .background(PlaceholderColor))
+            }
+        }
+    }
+}
+
 
 @Composable
 fun Statistics.Show(
@@ -109,7 +163,9 @@ fun Snippet.Show(
     onClick: () -> Unit
 ){
     Box(
-        Modifier.clickable(onClick = onClick).fillMaxWidth()
+        Modifier
+            .clickable(onClick = onClick)
+            .fillMaxWidth()
     ) {
         Column(Modifier.padding(12.dp)) {
             Text(title,fontSize = 20.sp)
