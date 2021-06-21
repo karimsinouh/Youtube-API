@@ -18,6 +18,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -116,7 +117,8 @@ private fun SearchBar(
             value = value,
             onValueChange = { onValueChange(it) },
             singleLine = true,
-            textStyle = TextStyle(color = MaterialTheme.colors.onSurface)
+            textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+            cursorBrush= SolidColor(MaterialTheme.colors.primary)
         )
 
         IconButton(onClick = { onSearchClick() }) {

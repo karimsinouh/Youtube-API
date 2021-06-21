@@ -40,15 +40,11 @@ fun MainToolbar(
     onSearchClick:()->Unit
 ){
     TopAppBar(
-        title = { Text("Youtube API") },
+        title = { Text(stringResource(id = R.string.app_name)) },
         actions = {
 
             IconButton(onSearchClick) {
                 Icon(Icons.Outlined.Search, null)
-            }
-
-            IconButton(onClick = {}) {
-                Icon(Icons.Outlined.Settings, "")
             }
         },
         contentColor = MaterialTheme.colors.onSurface,

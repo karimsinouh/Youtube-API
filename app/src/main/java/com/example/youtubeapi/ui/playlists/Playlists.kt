@@ -41,7 +41,7 @@ fun Playlists(
                     if((index+1)==videos.size){
                         //the end of the list has been reached
 
-                        if (!isLoading && nextPageToken!="")
+                        if (nextPageToken!="")
                             LaunchedEffect(nextPageToken){
                                 vm.loadPlaylists()
                             }
