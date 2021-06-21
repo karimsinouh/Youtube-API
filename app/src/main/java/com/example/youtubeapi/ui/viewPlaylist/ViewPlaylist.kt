@@ -17,6 +17,7 @@ import com.example.youtubeapi.ui.viewVideo.Show
 import com.example.youtubeapi.uiplayVideo.PlayVideoActivity
 import com.example.youtubeapi.utils.CenterProgress
 import com.example.youtubeapi.utils.StickyHeader
+import com.example.youtubeapi.utils.shareVideo
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -65,7 +66,9 @@ fun ViewPlaylist(
                                     video.snippet.Show {}
                                     video.statistics?.Show(
                                         inWatchLater = inWatchLater.value,
-                                        onShare = {  },
+                                        onShare = {
+                                            shareVideo(context,video.id)
+                                        },
                                         onWatchLater = { vm.onWatchLater(video.id,it) }
                                     )
                                 }
