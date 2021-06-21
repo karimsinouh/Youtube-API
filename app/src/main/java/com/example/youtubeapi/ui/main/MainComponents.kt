@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -19,10 +20,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.youtubeapi.R
+import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.ui.watchLater.WatchLater
 import com.example.youtubeapi.ui.playlists.Playlists
@@ -99,18 +102,33 @@ fun MainRow(
 }
 
 @Composable
-fun MainSheet(){
-
+fun MainSheet(snippet: Snippet?){
+    snippet?.apply {
+        Column(Modifier.padding(18.dp)) {
+            Text(text = title, fontSize = 20.sp)
+            Text(text = publishedAt, fontSize = 12.sp)
+            Spacer(modifier = Modifier.height(4.dp))
+            Divider()
+            Spacer(modifier = Modifier.height(8.dp))
+            SelectionContainer(modifier=Modifier.height(450.dp)) {
+                Text(
+                    text = description,
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                )
+            }
+        }
+    }
 }
 
 @Composable
 fun MainNavHost(
     controller:NavHostController,
-    vm:MainViewModel
+    vm:MainViewModel,
+    onShowBottomSheet:(Snippet)->Unit,
 ){
     NavHost(
         navController = controller,
-        startDestination = Screen.Videos.route
+        startDestination = Screen.Videos.route,
     ){
 
         composable(Screen.Search.route){
@@ -130,13 +148,19 @@ fun MainNavHost(
         }
 
         composable("${Screen.ViewVideo.route}/{videoId}"){
-            ViewVideo(videoId = it.arguments?.getString("videoId")!!, videos =vm.videosState.items)
+            ViewVideo(
+                videoId = it.arguments?.getString("videoId")!!,
+                videos =vm.videosState.items,
+                onShowBottomSheet={snippet-> onShowBottomSheet(snippet) }
+            )
         }
 
         composable("${Screen.ViewPlaylist.route}/{playlistId}"){
             val playlistId=it.arguments?.getString("playlistId")!!
             val playlist=vm.playlistsState.items.value.findPlaylistById(playlistId)
-            ViewPlaylist(playlist = playlist!!)
+            ViewPlaylist(
+                playlist = playlist!!,
+                onShowBottomSheet={snippet-> onShowBottomSheet(snippet) })
         }
 
     }

@@ -11,7 +11,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.ui.theme.DrawerShape
+import com.example.youtubeapi.ui.theme.SheetShape
 import com.example.youtubeapi.ui.theme.YoutubeAPITheme
 import com.example.youtubeapi.utils.isDarkMode
 import com.example.youtubeapi.utils.setDarkMode
@@ -47,6 +49,10 @@ class MainActivity : ComponentActivity() {
             darkTheme=remember { mutableStateOf(false) }
             uiController= rememberSystemUiController()
 
+            val bottomSheetSnippet = remember{
+                mutableStateOf<Snippet?>(null)
+            }
+
             //theming
             darkTheme.value=isDarkMode()
 
@@ -59,17 +65,27 @@ class MainActivity : ComponentActivity() {
 
                 Surface(color = MaterialTheme.colors.background) {
 
+
+
                     BottomSheetScaffold(
-                        sheetContent = {MainSheet()},
+                        sheetContent = {MainSheet(bottomSheetSnippet.value)},
                         topBar = {TopBar()},
                         sheetPeekHeight = 0.dp,
                         drawerShape = DrawerShape,
                         drawerContent = { Drawer() },
                         drawerBackgroundColor = MaterialTheme.colors.background,
                         drawerContentColor = MaterialTheme.colors.onBackground,
-                        scaffoldState = scaffoldState
+                        scaffoldState = scaffoldState,
+                        sheetShape = SheetShape,
+                        sheetBackgroundColor = MaterialTheme.colors.background,
+                        sheetContentColor = MaterialTheme.colors.onBackground
                     ) {
-                        MainNavHost(navController,vm)
+                        MainNavHost(navController,vm) {
+                            bottomSheetSnippet.value=it
+                            scope.launch {
+                                scaffoldState.bottomSheetState.expand()
+                            }
+                        }
                     }
 
                     navController.addOnDestinationChangedListener { _, destination, _ ->

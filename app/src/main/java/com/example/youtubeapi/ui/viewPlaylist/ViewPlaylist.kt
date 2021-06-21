@@ -11,6 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.ui.viewVideo.Show
@@ -24,6 +25,7 @@ import com.example.youtubeapi.utils.shareVideo
 fun ViewPlaylist(
     playlist:PlaylistItem,
     vm:ViewPlaylistViewModel = hiltViewModel(),
+    onShowBottomSheet:(Snippet)->Unit
 ){
 
     val context= LocalContext.current
@@ -63,12 +65,13 @@ fun ViewPlaylist(
                                 val inWatchLater=vm.exists(video.id!!).observeAsState(false)
 
                                 Column {
-                                    video.snippet.Show {}
+                                    video.snippet.Show {
+                                        onShowBottomSheet(video.snippet)
+                                    }
+
                                     video.statistics?.Show(
                                         inWatchLater = inWatchLater.value,
-                                        onShare = {
-                                            shareVideo(context,video.id)
-                                        },
+                                        onShare = { shareVideo(context,video.id) },
                                         onWatchLater = { vm.onWatchLater(video.id,it) }
                                     )
                                 }

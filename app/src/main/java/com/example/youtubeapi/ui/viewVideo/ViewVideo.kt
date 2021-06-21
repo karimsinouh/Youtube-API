@@ -12,6 +12,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.uiplayVideo.PlayVideoActivity
@@ -23,7 +24,8 @@ import com.example.youtubeapi.utils.shareVideo
 fun ViewVideo(
     videoId:String,
     videos:MutableState<List<VideoItem>>,
-    vm:ViewVideoViewModel=hiltViewModel()
+    vm:ViewVideoViewModel=hiltViewModel(),
+    onShowBottomSheet:(Snippet)->Unit
 ){
 
     val context= LocalContext.current
@@ -50,7 +52,9 @@ fun ViewVideo(
                     LazyColumn {
 
                         item {
-                            video.snippet.Show {}
+                            video.snippet.Show {
+                                onShowBottomSheet(video.snippet)
+                            }
                         }
 
                         item {
