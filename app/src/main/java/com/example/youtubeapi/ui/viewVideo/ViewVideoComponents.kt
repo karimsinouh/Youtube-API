@@ -34,6 +34,7 @@ import com.example.youtubeapi.ui.theme.PlaceholderColor
 import com.example.youtubeapi.utils.CoilImage
 import com.example.youtubeapi.utils.Placeholder
 import com.example.youtubeapi.utils.defaultThumbnail
+import com.example.youtubeapi.utils.formatNumbers
 import kotlin.random.Random
 
 
@@ -113,9 +114,9 @@ fun Statistics.Show(
         horizontalArrangement = Arrangement.SpaceEvenly
     ){
 
-        VideoStatisticsItem(viewCount.toString(), painter = painterResource(R.drawable.ic_eye)) {}
-        VideoStatisticsItem(likeCount.toString(), Icons.Default.ThumbUp) {}
-        VideoStatisticsItem(dislikeCount.toString(), painter = painterResource(id = R.drawable.ic_dislike)) {}
+        VideoStatisticsItem(viewCount.formatNumbers(), painter = painterResource(R.drawable.ic_eye)) {}
+        VideoStatisticsItem(likeCount.formatNumbers(), Icons.Default.ThumbUp) {}
+        VideoStatisticsItem(dislikeCount.formatNumbers(), painter = painterResource(id = R.drawable.ic_dislike)) {}
         VideoStatisticsItem("Share", Icons.Outlined.Share,onClick = onShare)
 
         if (inWatchLater)
