@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.youtubeapi.R
 import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.ui.theme.DrawerShape
 import com.example.youtubeapi.ui.theme.SheetShape
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity() {
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_YoutubeAPI)
         setContent {
 
             scope= rememberCoroutineScope()

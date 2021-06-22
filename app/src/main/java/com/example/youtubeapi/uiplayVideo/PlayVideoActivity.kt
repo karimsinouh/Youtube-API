@@ -18,6 +18,7 @@ class PlayVideoActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_YoutubeAPI)
         setContentView(R.layout.activity_play_video)
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 

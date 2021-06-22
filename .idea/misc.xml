@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android projects/compose/YoutubeAPI/app/src/main/res/drawable/ic_splash_logo.xml" value="0.17777777777777778" />
+        <entry key="..\:/Android projects/compose/YoutubeAPI/app/src/main/res/drawable/splash_screen.xml" value="0.15" />
         <entry key="..\:/Android projects/compose/YoutubeAPI/app/src/main/res/layout/activity_play_video.xml" value="0.225" />
       </map>
     </option>
