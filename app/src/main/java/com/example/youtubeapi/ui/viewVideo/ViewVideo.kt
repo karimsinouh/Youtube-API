@@ -16,6 +16,7 @@ import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.uiplayVideo.PlayVideoActivity
+import com.example.youtubeapi.utils.ErrorDialog
 import com.example.youtubeapi.utils.StickyHeader
 import com.example.youtubeapi.utils.shareVideo
 
@@ -82,6 +83,12 @@ fun ViewVideo(
 
                     }
                 }
+
+            vm.message.value?.let{
+                ErrorDialog(text = it) {
+                    vm.message.value=null
+                }
+            }
 
         }
     }

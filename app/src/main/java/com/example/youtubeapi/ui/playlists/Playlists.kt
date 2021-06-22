@@ -17,6 +17,7 @@ import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.ui.main.MainViewModel
 import com.example.youtubeapi.utils.CenterProgress
 import com.example.youtubeapi.utils.CoilImage
+import com.example.youtubeapi.utils.ErrorDialog
 import com.example.youtubeapi.utils.defaultThumbnail
 
 @Composable
@@ -55,6 +56,12 @@ fun Playlists(
                     }
 
             }
+
+        message.value?.let{
+            ErrorDialog(text = it) {
+                message.value=null
+            }
+        }
 
     }
 }

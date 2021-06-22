@@ -29,6 +29,7 @@ import com.example.youtubeapi.ui.playlists.PlaylistItem
 import com.example.youtubeapi.ui.videos.VideoItem
 import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.utils.CenterProgress
+import com.example.youtubeapi.utils.ErrorDialog
 
 @Composable
 fun Search(vm:SearchViewModel= hiltViewModel(),nav:NavController){
@@ -88,6 +89,12 @@ fun Search(vm:SearchViewModel= hiltViewModel(),nav:NavController){
 
                 }
 
+            }
+
+            vm.message.value?.let{
+                ErrorDialog(text = it) {
+                    vm.message.value=null
+                }
             }
 
         }

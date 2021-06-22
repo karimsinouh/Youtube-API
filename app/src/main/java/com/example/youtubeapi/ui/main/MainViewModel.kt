@@ -1,17 +1,13 @@
 package com.example.youtubeapi.ui.main
 
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.youtubeapi.api.Repository
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.data.items.VideoItem
-import com.example.youtubeapi.data.screen.*
+import com.example.youtubeapi.data.screen.ScreenState
 import com.example.youtubeapi.database.DAO
-import com.example.youtubeapi.database.WatchLaterVideo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,7 +30,6 @@ class MainViewModel @Inject constructor(
 
     suspend fun loadVideos(){
             videosState.setLoading(true)
-            delay(1000)
             repo.getVideos(videosState.nextPageToken){
 
                 videosState.setLoading(false)
@@ -51,8 +46,6 @@ class MainViewModel @Inject constructor(
     suspend fun loadPlaylists() {
 
         playlistsState.setLoading(true)
-        delay(1000)
-
         repo.getPlaylists(playlistsState.nextPageToken){
             playlistsState.setLoading(false)
             if (it.isSuccessful){

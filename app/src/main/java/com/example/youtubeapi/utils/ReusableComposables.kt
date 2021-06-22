@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.youtubeapi.ui.theme.PlaceholderColor
@@ -85,7 +86,7 @@ fun CoilImage(
 fun CenterProgress(fullHeight:Boolean=true){
     Box(
         modifier = if (fullHeight) Modifier.fillMaxSize() else Modifier
-            .padding(0.dp,8.dp)
+            .padding(0.dp, 8.dp)
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ){
@@ -96,7 +97,9 @@ fun CenterProgress(fullHeight:Boolean=true){
 @Composable
 fun StickyHeader(text:String){
     Box(
-        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background)
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.background)
     ) {
         Text(
             text,
@@ -115,7 +118,9 @@ fun ExpandableStickyHeader(
 ){
 
     Row(
-        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background)
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.background)
     ) {
         Text(
             text,
@@ -131,4 +136,21 @@ fun ExpandableStickyHeader(
     }
 
 
+}
+
+@Composable
+fun ErrorDialog(
+    text:String,
+    onDismiss:()->Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        text={ Text(text,fontSize = 14.sp)},
+        title={Text("Error")},
+        buttons={
+            Button(onClick = onDismiss,modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                Text(text = "Ok")
+            }
+        }
+    )
 }

@@ -17,6 +17,7 @@ import com.example.youtubeapi.ui.videos.VideoItemSmall
 import com.example.youtubeapi.ui.viewVideo.Show
 import com.example.youtubeapi.uiplayVideo.PlayVideoActivity
 import com.example.youtubeapi.utils.CenterProgress
+import com.example.youtubeapi.utils.ErrorDialog
 import com.example.youtubeapi.utils.StickyHeader
 import com.example.youtubeapi.utils.shareVideo
 
@@ -35,6 +36,7 @@ fun ViewPlaylist(
     }
 
     Surface(color= MaterialTheme.colors.background) {
+
         Column {
 
             //header
@@ -107,5 +109,12 @@ fun ViewPlaylist(
             }
 
         }
+
+        vm.message.value?.let{
+            ErrorDialog(text = it) {
+                vm.message.value=null
+            }
+        }
+
     }
 }

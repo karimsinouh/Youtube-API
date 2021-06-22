@@ -25,15 +25,22 @@ class SearchViewModel @Inject constructor(
     var pageToken=""
 
     fun search()=viewModelScope.launch{
-        delay(1000)
-        Log.d("wtf","${items.size}")
+
+        if(searchQuery.value=="")
+            return@launch
 
         isLoading.value=true
         youtube.search(searchQuery.value,pageToken){
             isLoading.value=false
             if (it.isSuccessful){
-                items.addAll(it.data?.items?: emptyList())
+                val result=it.data?.items?: emptyList()
+                items.addAll(result)
                 pageToken=it.data?.nextPageToken?:""
+
+                if(result.isEmpty()){
+                    message.value="We couldn't find any result matching ${searchQuery.value}"
+                }
+
             }else
                 message.value=it.message
 

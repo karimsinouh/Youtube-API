@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -18,6 +22,7 @@ import com.example.youtubeapi.data.Snippet
 import com.example.youtubeapi.ui.main.MainViewModel
 import com.example.youtubeapi.utils.CenterProgress
 import com.example.youtubeapi.utils.CoilImage
+import com.example.youtubeapi.utils.ErrorDialog
 import com.example.youtubeapi.utils.defaultThumbnail
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -60,7 +65,15 @@ fun Videos(
                     }
                 }
             }
+        
+        message.value?.let{
+            ErrorDialog(text = it) {
+                message.value=null
+            }
+        }
     }
+
+
 }
 
 @Composable
