@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YoutubeAPI">
         <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:screenOrientation="landscape"
             android:name=".uiplayVideo.PlayVideoActivity"
             android:exported="true" />
