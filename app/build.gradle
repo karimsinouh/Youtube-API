@@ -56,16 +56,15 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.12.0"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.3.0-beta02'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.activity:activity-compose:1.3.0-rc01'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha02"
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha04"
 
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0-alpha02'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0-alpha03'
 
     implementation "com.google.dagger:hilt-android:2.35"
     kapt "com.google.dagger:hilt-android-compiler:2.35"
@@ -75,7 +74,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.7.2'
 
     //image loading library
-    implementation "com.google.accompanist:accompanist-coil:0.10.0"
+    implementation "com.google.accompanist:accompanist-coil:0.12.0"
 
     //room database
     def room_version = "2.3.0"
