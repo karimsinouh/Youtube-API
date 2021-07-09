@@ -5,12 +5,15 @@ import com.example.youtubeapi.data.items.VideoItem
 import com.example.youtubeapi.data.Result
 import com.example.youtubeapi.data.items.PlaylistItem
 import com.example.youtubeapi.data.items.SearchItem
+import com.example.youtubeapi.utils.ConnectivityUtility
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class Repository @Inject constructor(
-    private val api:YoutubeEndPoint
+    private val api:YoutubeEndPoint,
+    private val network:ConnectivityUtility
 ){
 
     suspend fun getVideo(id:String, listener:(Result<VideoItem>)->Unit ){
@@ -35,14 +38,30 @@ class Repository @Inject constructor(
     }
 
     suspend fun getVideos(pageToken:String?, listener:(Result<ResponsePage<VideoItem>>)->Unit){
-        api.getVideos(pageToken).apply {
-            listener(Result(isSuccessful,body(),message()))
+        if (network.hasInternet()){
+            try{
+                api.getVideos(pageToken).apply {
+                    listener(Result(isSuccessful,body(),message()))
+                }
+            }catch (e:IOException){
+                listener(Result(false,null,e.message))
+            }
+        }else{
+            listener(Result(false,null,"Please check your internet connection"))
         }
     }
 
     suspend fun getPlaylists(pageToken:String?, listener:(Result<ResponsePage<PlaylistItem>>)->Unit){
-        api.getPlaylists(pageToken).apply {
-            listener(Result(isSuccessful,body(),message()))
+        if (network.hasInternet()){
+            try {
+                api.getPlaylists(pageToken).apply {
+                    listener(Result(isSuccessful,body(),message()))
+                }
+            }catch (e:IOException){
+                listener(Result(false,null,e.message))
+            }
+        }else{
+            listener(Result(false,null,"Please check your internet connection"))
         }
     }
 

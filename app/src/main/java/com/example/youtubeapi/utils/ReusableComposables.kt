@@ -144,11 +144,12 @@ fun ErrorDialog(
     onDismiss:()->Unit
 ) {
     AlertDialog(
+        modifier=Modifier.padding(36.dp),
         onDismissRequest = onDismiss,
         text={ Text(text,fontSize = 14.sp)},
         title={Text("Error")},
-        buttons={
-            Button(onClick = onDismiss,modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
                 Text(text = "Ok")
             }
         }
